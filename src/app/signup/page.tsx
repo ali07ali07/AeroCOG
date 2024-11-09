@@ -88,7 +88,7 @@ const SignupPage = () => {
                   Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
-                  It's totally free and super easy
+                  It&apos;s totally free and super easy
                 </p>
                 <button
                 onClick={handleGoogleSignIn}
