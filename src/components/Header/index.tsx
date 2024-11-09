@@ -66,7 +66,7 @@ const Header = () => {
               href="/"
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
-              <span className="text-2xl font-bold text-primary">AeroCOG</span>
+              <span className="text-2xl font-bold text-primary">Aerocog</span>
               <span className="block text-sm font-light text-gray-500">Consult an Expert</span>
             </Link>
           </div>

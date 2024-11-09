@@ -32,8 +32,11 @@ const SignupPage = () => {
    // Event handler for Google sign-in
    const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(authInstance, googleProvider);
+      const userCredential= await signInWithPopup(authInstance, googleProvider);
       console.log("Signed in with Google");
+      // Send email verification
+    await sendEmailVerification(userCredential.user);
+    alert("Please verify your email before logging in.");
       setIsAuthenticated(true); 
       
     } catch (error) {
@@ -45,8 +48,11 @@ const SignupPage = () => {
   // Event handler for GitHub sign-in
   const handleGithubSignIn = async () => {
     try {
-      await signInWithPopup(authInstance, githubProvider);
+      const userCredential= await signInWithPopup(authInstance, githubProvider);
       console.log("Signed in with GitHub");
+      // Send email verification
+    await sendEmailVerification(userCredential.user);
+    alert("Please verify your email before logging in.");
       setIsAuthenticated(true); 
      
     } catch (error) {
@@ -205,7 +211,7 @@ const SignupPage = () => {
                       name="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your Password"
+                      placeholder="Create Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>

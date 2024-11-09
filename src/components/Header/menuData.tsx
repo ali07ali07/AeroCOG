@@ -32,6 +32,12 @@ const menuData: Menu[] = [
     title: "Pages",
     newTab: false,
     submenu: [
+      {
+        id: 48,
+        title: "Profile",
+        path: "/profile",  
+        newTab: false,
+      },
       
       {
         id: 46,

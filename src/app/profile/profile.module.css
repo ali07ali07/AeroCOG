@@ -1,0 +1,53 @@
+/* Profile Container */
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 20px;
+  margin: 100px auto;
+  margin-top: 150px; 
+  max-width: 670px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.profileHeader {
+  font-size: 1.8em;
+  color: var(--header-color);
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+/* Info Section */
+.info {
+  font-size: 1.2em;
+  color: var(--text-color);
+  margin: 10px 0;
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: var(--header-color);
+}
+
+/* Sign Out Button */
+.signOutButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.signOutButton:hover {
+  background-color: #0056b3;
+}
