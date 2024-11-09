@@ -1,14 +1,89 @@
+"use client";
+import React from "react";
 import Link from "next/link";
+import { useState } from "react";
+//import { useRouter } from "next/compat/router";
+import { FirebaseError } from "firebase/app";
+import { useRouter } from 'next/navigation';
 
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Sign In Page | AeroCOG",
-  description: "This is Sign In Page for AeroCOG",
-  // other metadata
-};
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from 'firebase/auth';
+import { auth } from '../../components/firebase';
 
 const SigninPage = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState("");
+  
+
+    // Google and GitHub provider instances
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
+      // Event handler for Google sign-in
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      console.log("Signed in with Google");
+      router.push("/landing");
+    } catch (error) {
+      console.error("Error with Google Sign In", error);
+    }
+  };
+
+  // Event handler for GitHub sign-in
+  const handleGithubSignIn = async () => {
+    try {
+      await signInWithPopup(auth, githubProvider);
+      console.log("Signed in with GitHub");
+      router.push("/landing");
+    } catch (error) {
+      console.error("Error with GitHub Sign In", error);
+    }
+  };
+
+  // Event handler for email/password sign-in
+  const handleEmailSignIn = async (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent form from submitting
+    console.log("Email:", email);  // Confirm email value
+    console.log("Password:", password);  // Confirm password value
+    try {
+      if (!email || !password) {
+        setError("Email and password cannot be empty.");
+        return;
+      }
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("Signed in with Email and Password");
+      router.push("/landing");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setError("Invalid email format.");
+          break;
+        case 'auth/user-not-found':
+          setError("User not found.");
+          break;
+        case 'auth/wrong-password':
+          setError("Incorrect password.");
+          break;
+        default:
+          setError("Error signing in. Please try again.");
+          console.error("Firebase error:", error);
+      }
+    } else {
+      setError("An unexpected error occurred. Please try again.");
+      console.error("Unexpected error:", error);
+    }
+  }
+};
+  
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -22,7 +97,9 @@ const SigninPage = () => {
                 <p className="mb-11 text-center text-base font-medium text-body-color">
                   Login to your account for a faster checkout.
                 </p>
-                <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                <button
+                 onClick={handleGoogleSignIn}
+                 className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -59,7 +136,9 @@ const SigninPage = () => {
                   Sign in with Google
                 </button>
 
-                <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                <button 
+                onClick={handleGithubSignIn}
+                className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       fill="currentColor"
@@ -80,17 +159,24 @@ const SigninPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form>
+
+                {/*
+                form strt here!
+                */}
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                <form onSubmit={handleEmailSignIn}>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
                       className="mb-3 block text-sm text-dark dark:text-white"
+                      
                     >
                       Your Email
                     </label>
                     <input
                       type="email"
                       name="email"
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your Email"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -105,6 +191,7 @@ const SigninPage = () => {
                     <input
                       type="password"
                       name="password"
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -143,17 +230,18 @@ const SigninPage = () => {
                         Keep me signed in
                       </label>
                     </div>
-                    <div>
+                   {/* <div>
                       <a
                         href="#0"
                         className="text-sm font-medium text-primary hover:underline"
                       >
                         Forgot Password?
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="mb-6">
-                    <button className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button type="submit"
+                     className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
                       Sign in
                     </button>
                   </div>

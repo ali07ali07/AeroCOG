@@ -26,17 +26,13 @@ const menuData: Menu[] = [
     newTab: false,
   },
   
+  
   {
     id: 4,
     title: "Pages",
     newTab: false,
     submenu: [
-      {
-        id: 33,
-        title: "Blog",
-        path: "/blog",
-        newTab: false,
-      },
+      
       {
         id: 46,
         title: "Sign In",
@@ -49,6 +45,7 @@ const menuData: Menu[] = [
         path: "/signup",
         newTab: false,
       },
+      /*
       {
         id: 22,
         title: "Refund Policy",
@@ -77,7 +74,10 @@ const menuData: Menu[] = [
         path: "/error",
         newTab: false,
       },
+      */
     ],
   },
+
+  
 ];
 export default menuData;

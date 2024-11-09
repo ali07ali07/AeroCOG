@@ -14,8 +14,9 @@ const Blog = () => {
   return (
     <>
       <Breadcrumb
-        pageName="Blog Grid"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+        pageName="Our Experts"
+        description="Connect with top aerospace professionals ready to bring their knowledge and expertise to your projects. 
+        Discover specialized insights and guidance tailored to elevate your aerospace goals."
       />
 
       <section className="pb-[120px] pt-[120px]">
@@ -30,7 +31,7 @@ const Blog = () => {
               </div>
             ))}
           </div>
-
+{/*}
           <div className="-mx-4 flex flex-wrap" data-wow-delay=".15s">
             <div className="w-full px-4">
               <ul className="flex items-center justify-center pt-8">
@@ -90,6 +91,7 @@ const Blog = () => {
               </ul>
             </div>
           </div>
+*/}
         </div>
       </section>
     </>
