@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable build caching
-  experimental: {
-    buildCache: true,
-  },
+  
   images: {
     domains: ["localhost"],
     remotePatterns: [
@@ -15,5 +12,10 @@ const nextConfig = {
     ],
   },
 };
-
+module.exports = {
+// Enable build caching
+  experimental: {
+    buildCache: true,
+  },
+};
 module.exports = nextConfig;

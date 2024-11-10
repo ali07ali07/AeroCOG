@@ -264,7 +264,7 @@ const ConfirmationPage = () => {
       }}>
         <h1>Appointment Booked! 🎉</h1>
         <br />
-        <p>Your booking number is: {bookingId}</p> {/* Display the actual booking ID */}
+        <p>Your booking number is: {bookingId}</p>
         <p>
           <br />
           <a href="/" style={{ color: 'blue', textDecoration: 'underline' }}>
