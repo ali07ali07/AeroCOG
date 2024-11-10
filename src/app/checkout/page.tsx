@@ -42,18 +42,17 @@ const CheckoutPage = () => {
     e.preventDefault();
     setLoading(true);
     const formattedDate = date ? new Date(date) : null;
-  const isValidDate = formattedDate && !isNaN(formattedDate.getTime());
-  const validDate = isValidDate ? Timestamp.fromDate(formattedDate) : Timestamp.now();
-  const validTime = time || 'Not Set'; // Default time if invalid
-
-
+    const isValidDate = formattedDate && !isNaN(formattedDate.getTime());
+    const validDate = isValidDate ? Timestamp.fromDate(formattedDate) : Timestamp.now();
+    const validTime = time || 'Not Set'; // Default time if invalid
+  
     // Validate the form data
     if (!userName || !whatsappNumber) {
       alert("Please fill in all the details.");
       setLoading(false);
       return;
     }
-
+  
     // Create the appointment object
     const appointment = {
       expertId,
@@ -65,12 +64,14 @@ const CheckoutPage = () => {
       time: validTime,
       createdAt: Timestamp.now(),
     };
-
+  
     try {
-      // Push the appointment data to Firestore
-      await addDoc(collection(db, 'appointments'), appointment);
-      alert('Consultation booked successfully!');
-      router.push('/confirmation'); // Redirect to a confirmation page
+      // Push the appointment data to Firestore and capture the document reference
+      const docRef = await addDoc(collection(db, 'appointments'), appointment);
+      const documentId = docRef.id; // Capture the Document ID
+  
+      alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
+      router.push('/Confirmation'); // Redirect to a confirmation page
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('There was an error booking your consultation.');
@@ -78,6 +79,7 @@ const CheckoutPage = () => {
       setLoading(false);
     }
   };
+  
 
   const formattedDate = date ? new Date(date) : new Date();
   const isValidDate = formattedDate && !isNaN(formattedDate.getTime());
