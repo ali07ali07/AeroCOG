@@ -86,7 +86,6 @@ const CheckoutPage = () => {
   const isFinalDateValid = finalDate && !isNaN(finalDate.getTime());
 
   return (
-    
     <Suspense fallback={<div>Loading...</div>}>
       <div className="checkout-page-wrapper">
         <div className="checkout-page-container mt-36 p-8 max-w-4xl mx-auto rounded-lg shadow-lg">
@@ -161,6 +160,5 @@ const CheckoutPage = () => {
     </Suspense>
   );
 };
-
 
 export default CheckoutPage;

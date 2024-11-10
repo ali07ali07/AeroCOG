@@ -1,8 +1,7 @@
 'use client';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation'; // Import from next/navigation for server components
-import Header from "@/components/Header";  // Import Header component
-import Footer from "@/components/Footer";  // Import Footer component
+
 
 const ConfirmationPage = () => {
   
