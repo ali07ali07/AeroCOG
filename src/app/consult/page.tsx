@@ -32,7 +32,7 @@ const ConsultPageContent = () => {
   }, [expertId, expertName, router]);
 
   if (!selectedExpert) {
-    return <p>Loading expert details...</p>;
+    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading expert details...</p>;
   }
 
   return (
