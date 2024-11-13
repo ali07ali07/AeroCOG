@@ -33,7 +33,7 @@ const SignupPage = () => {
    const handleGoogleSignIn = async () => {
     try {
       const userCredential= await signInWithPopup(authInstance, googleProvider);
-      console.log("Signed in with Google");
+    //  console.log("Signed in with Google");
       // Send email verification
     await sendEmailVerification(userCredential.user);
     alert("Please verify your email before logging in.");
@@ -49,7 +49,7 @@ const SignupPage = () => {
   const handleGithubSignIn = async () => {
     try {
       const userCredential= await signInWithPopup(authInstance, githubProvider);
-      console.log("Signed in with GitHub");
+    //  console.log("Signed in with GitHub");
       // Send email verification
     await sendEmailVerification(userCredential.user);
     alert("Please verify your email before logging in.");

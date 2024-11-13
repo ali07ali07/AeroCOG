@@ -50,14 +50,14 @@ const ConsultForm = ({ selectedExpert }) => {
 
   // Handle date selection from calendar
   const handleDateChange = (date) => {
-    console.log('Selected Date:', date);
+  //  console.log('Selected Date:', date);
     setSelectedDate(date);
     setIsCalendarVisible(false);
   };
 
   // Handle time slot selection
   const handleTimeSlotSelect = (value) => {
-    console.log('Selected Time Slot:', value);
+   // console.log('Selected Time Slot:', value);
     setSelectedTimeSlot(value);
   };
 

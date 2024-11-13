@@ -30,7 +30,7 @@ const SigninPage = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      console.log("Signed in with Google");
+      //console.log("Signed in with Google");
       router.push("/landing");
     } catch (error) {
       console.error("Error with Google Sign In", error);
@@ -41,7 +41,7 @@ const SigninPage = () => {
   const handleGithubSignIn = async () => {
     try {
       await signInWithPopup(auth, githubProvider);
-      console.log("Signed in with GitHub");
+      //console.log("Signed in with GitHub");
       router.push("/landing");
     } catch (error) {
       console.error("Error with GitHub Sign In", error);
@@ -51,15 +51,15 @@ const SigninPage = () => {
   // Event handler for email/password sign-in
   const handleEmailSignIn = async (event: React.FormEvent) => {
     event.preventDefault(); // Prevent form from submitting
-    console.log("Email:", email);  // Confirm email value
-    console.log("Password:", password);  // Confirm password value
+   // console.log("Email:", email);  // Confirm email value
+    //console.log("Password:", password);  // Confirm password value
     try {
       if (!email || !password) {
         setError("Email and password cannot be empty.");
         return;
       }
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Signed in with Email and Password");
+      //console.log("Signed in with Email and Password");
       router.push("/landing");
     } catch (error) {
       if (error instanceof FirebaseError) {

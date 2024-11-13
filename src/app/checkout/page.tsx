@@ -91,7 +91,7 @@ const CheckoutPage = () => {
       const documentId = docRef.id;
 
       alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
-      router.push('/confirmation');
+      router.push('/Confirmation');
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('There was an error booking your consultation.');
@@ -155,7 +155,7 @@ const CheckoutPage = () => {
                 disabled
                 style={{ cursor: 'not-allowed' }}
               />
-              <p className="text-red-600 text-sm mt-1">Change your name on profile page</p>
+              <p className="text-red-600 text-sm mt-1"> You can change your name on profile page</p>
             </div>
 
             <div className="input-group">

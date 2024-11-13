@@ -5,7 +5,7 @@ import Breadcrumb from '../../components/Common/Breadcrumb';
 import 'firebase/auth';
 import { auth, onAuthStateChanged } from '../../components/firebase';
 import Header from '../../components/Header';
-import ExpertsPage from '../experts/page';
+// import ExpertsPage from '../experts/page';
 import dynamic from 'next/dynamic'; // Import dynamic for lazy loading
 import expertsData from '@/data/expertsData';
 
