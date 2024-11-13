@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const ExpertCard = ({ expert }) => {
   const router = useRouter();
-`/experts/${expert.id}`
+  `/experts/${expert.id}`
   const handleSelectExpert = () => {
     // Navigate to the consult page with the selected expert's ID
     router.push(`/consult?expertId=${expert.id}`);
@@ -18,6 +18,7 @@ const ExpertCard = ({ expert }) => {
       {/* Display Expert Image */}
       <div className="mb-4 w-full h-48 relative">
         <Image
+          width={500} height={500} quality={75}
           src={expert.photo}
           alt={`${expert.name}'s photo`}
           layout="fill"
@@ -25,7 +26,7 @@ const ExpertCard = ({ expert }) => {
           className="rounded-md"
         />
       </div>
-      
+
       <h4 className="text-xl font-bold">{expert.name}</h4>
       <p className="text-sm text-gray-600">{expert.expertise}</p>
       <p className="text-sm text-gray-500 mt-2">{expert.bio}</p>
