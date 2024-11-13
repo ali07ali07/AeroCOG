@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import styles from './profile.module.css';
 import Breadcrumb from '../../components/Common/Breadcrumb';
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../components/firebase"; 
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../components/firebase"; 
+import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { db, auth } from "../../components/firebase";
+import { format } from 'date-fns';
 
 const Profile = () => {
   const pageName = "Profile";
@@ -15,16 +15,16 @@ const Profile = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
-  const [activeTab, setActiveTab] = useState<string>("profile");
+
+  const [activeTab, setActiveTab] = useState<string>("profile"); // Main tab (Profile / Appointments)
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loadingAppointments, setLoadingAppointments] = useState<boolean>(true);
 
   // Fetch appointment history
   useEffect(() => {
     const fetchAppointmentHistory = async () => {
+
       if (!user) return;
-      
       const q = query(
         collection(db, "appointments"),
         where("userEmail", "==", user.email)
@@ -85,21 +85,51 @@ const Profile = () => {
     auth.signOut();
   };
 
+  // Filter upcoming and previous appointments based on the current date
+  const currentDate = new Date();
+  const upcomingAppointments = appointments.filter(appointment => {
+    const appointmentDate = appointment.date ? new Date(appointment.date.seconds * 1000) : null;
+    return appointmentDate && appointmentDate >= currentDate;
+  }).sort((a, b) => {
+    const dateA = a.date ? new Date(a.date.seconds * 1000) : null;
+    const dateB = b.date ? new Date(b.date.seconds * 1000) : null;
+    return dateA && dateB ? dateA.getTime() - dateB.getTime() : 0;
+  });
+
+  const previousAppointments = appointments.filter(appointment => {
+    const appointmentDate = appointment.date ? new Date(appointment.date.seconds * 1000) : null;
+    return appointmentDate && appointmentDate < currentDate;
+  }).sort((a, b) => {
+    const dateA = a.date ? new Date(a.date.seconds * 1000) : null;
+    const dateB = b.date ? new Date(b.date.seconds * 1000) : null;
+    return dateB && dateA ? dateB.getTime() - dateA.getTime() : 0;
+  });
+
+  // Tab rendering
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  if (loadingAppointments) return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading appointments...</p>;
+
+
   return (
     <>
       <Breadcrumb pageName={pageName} description={description} />
+
+
       <div className={styles.profileContainer}>
-        {/* Tab Navigation */}
+        {/* Tab Navigation for Profile vs Appointments */}
         <div className={styles.tabs}>
           <button
             className={activeTab === "profile" ? styles.activeTab : ""}
-            onClick={() => setActiveTab("profile")}
+            onClick={() => handleTabClick("profile")}
           >
             My Profile
           </button>
           <button
             className={activeTab === "appointments" ? styles.activeTab : ""}
-            onClick={() => setActiveTab("appointments")}
+            onClick={() => handleTabClick("appointments")}
           >
             My Appointments
           </button>
@@ -131,27 +161,30 @@ const Profile = () => {
         )}
 
         {/* "My Appointments" Tab */}
+
         {activeTab === "appointments" && (
           <div className={styles.appointmentsContent}>
-            <h3>Booking History</h3>
-            {loadingAppointments ? (
-              <p>Loading booking history...</p>
-            ) : (
-              <ul className={styles.bookingList}>
-                {appointments.length > 0 ? (
-                  appointments.map((appointment, index) => (
-                    <li key={index} className={styles.bookingItem}>
-                      <span>Appointment with: {appointment.expertName || "Not Available"}</span>
-                      <span>Time: {appointment.time || "Not Available"}</span>
-                      <span>Date: {appointment.date ? new Date(appointment.date.seconds * 1000).toLocaleDateString() : "Not Available"}</span>
-                      <span>Status: {appointment.status || "N/A"}</span>
+            <h3>Appointments</h3>
+
+            {/* Upcoming Appointments */}
+            <div>
+              <h4>Upcoming Appointments</h4>
+              {upcomingAppointments.length > 0 ? (
+                <ul>
+                  {upcomingAppointments.map((appointment, index) => (
+                    <li key={index}>
+                      <span>Expert: {appointment.expertName}</span>
+                      <span>Time: {appointment.time}</span>
+                      <span>Date: {appointment.date ? format(new Date(appointment.date.seconds * 1000), 'dd/MM/yyyy') : "Not Available"}</span>
+                      <span>Status: Booked</span>
                     </li>
-                  ))
-                ) : (
-                  <p style={{color: 'red', fontWeight: "bold"}}>No appointments found.</p>
-                )}
-              </ul>
-            )}
+                  ))}
+                </ul>
+              ) : (
+                <p>No upcoming appointments</p>
+              )}
+            </div>
+
           </div>
         )}
       </div>

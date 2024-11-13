@@ -66,12 +66,12 @@ const ConsultForm = ({ selectedExpert }) => {
     if (expert && selectedDate && selectedTimeSlot) {
       console.log('Proceeding with Checkout:', {
         expertId: expert.id,
-        date: format(selectedDate, 'dd/MM/yyyy'),
+        date: selectedDate.toISOString(), // Save date as ISO string
         time: selectedTimeSlot,
       });
       router.push(
-        `/Checkout?expertId=${expert.id}&date=${encodeURIComponent(
-          format(selectedDate, 'dd/MM/yyyy')
+        `/checkout?expertId=${expert.id}&date=${encodeURIComponent(
+          selectedDate.toISOString() // Send ISO string
         )}&time=${selectedTimeSlot}`
       );
     } else {
@@ -79,7 +79,7 @@ const ConsultForm = ({ selectedExpert }) => {
         message: 'Please select a date, time, and time slot.',
         type: 'error',
       });
-      console.log('Error: Missing required fields.');
+      
     }
   };
 

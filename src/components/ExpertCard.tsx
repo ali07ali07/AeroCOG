@@ -18,7 +18,6 @@ const ExpertCard = ({ expert }) => {
       {/* Display Expert Image */}
       <div className="mb-4 w-full h-48 relative">
         <Image
-          width={500} height={500} quality={75}
           src={expert.photo}
           alt={`${expert.name}'s photo`}
           layout="fill"
