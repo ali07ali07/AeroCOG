@@ -1,14 +1,14 @@
-'use client';
-import { useState, useEffect, Suspense } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../components/firebase"; 
-import { format } from "date-fns";
-import { toZonedTime } from 'date-fns-tz'; // Import the conversion function
-import Breadcrumb from "../../components/Common/Breadcrumb";
-import expertsData from "@/data/expertsData";
+"use client";
+import React, { Suspense, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../components/firebase';
+import { format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
+import Breadcrumb from '../../components/Common/Breadcrumb';
+import expertsData from '@/data/expertsData';
 
 const CheckoutPage = () => {
   const pageName = "Checkout";
@@ -16,17 +16,16 @@ const CheckoutPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const expertId = searchParams.get('expertId');
-  const dateString = searchParams.get('date');  // Date from URL
-  const time = searchParams.get('time');  // Time from URL
+  const dateString = searchParams.get('date');
+  const time = searchParams.get('time');
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const [expert, setExpert] = useState(null); // State for expert data
+  const [expert, setExpert] = useState(null);
 
-  // Fetch user data and expert data
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,10 +50,9 @@ const CheckoutPage = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Validate and prepare data for Firestore
     const isValidDate = dateString && !isNaN(Date.parse(dateString));
-    const validDate = isValidDate ? new Date(dateString) : new Date(); // Keep as Date object
-    const validTime = time || 'Not Set'; // Fallback to 'Not Set' if time is not provided
+    const validDate = isValidDate ? new Date(dateString) : new Date();
+    const validTime = time || 'Not Set';
 
     if (!userName || !whatsappNumber) {
       alert("Please fill in all the details.");
@@ -62,11 +60,9 @@ const CheckoutPage = () => {
       return;
     }
 
-    // Combine date and time
     const [hours, minutes] = validTime.split(':');
-    validDate.setHours(parseInt(hours, 10), parseInt(minutes, 10)); // Set the time in the Date object
+    validDate.setHours(parseInt(hours, 10), parseInt(minutes, 10));
 
-    // Convert to IST (Indian Standard Time: UTC +5:30)
     const istDate = toZonedTime(validDate, 'Asia/Kolkata');
 
     const appointment = {
@@ -75,7 +71,7 @@ const CheckoutPage = () => {
       userName,
       userEmail,
       whatsappNumber,
-      date: istDate.toISOString(), // Save as ISO string (with correct date and time in IST)
+      date: istDate.toISOString(),
       time: validTime,
       createdAt: new Date().toISOString(),
     };
@@ -94,16 +90,14 @@ const CheckoutPage = () => {
     }
   };
 
-  // Format the date from URL (which is in ISO string format)
   const formattedDate = dateString ? new Date(dateString) : new Date();
   const isValidDate = formattedDate && !isNaN(formattedDate.getTime());
   const finalDate = isValidDate ? formattedDate : new Date();
 
-  const formattedTime = time || 'Not Set';  // Use 'Not Set' as fallback if no time is provided
+  const formattedTime = time || 'Not Set';
 
-  // Format the date and time
   const displayDate = format(finalDate, 'dd/MM/yyyy');
-  const displayTime = formattedTime;  // You can use 'HH:mm' format if you prefer 24-hour format
+  const displayTime = formattedTime;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -121,7 +115,6 @@ const CheckoutPage = () => {
 
           <div className="consultation-summary mt-6">
             <div className="text-center mb-4">
-              {/* Displaying expert's name dynamically */}
               <p><strong>Expert:</strong> {expert ? `Dr. ${expert.name}` : 'Expert not found'}</p>
               <br />
               <p><strong>Date:</strong> {isValidDate ? displayDate : 'Invalid date'}</p>
