@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { format } from 'date-fns'; // For date formatting
+import expertsData from '../../src/data/expertsData';
 
 const CheckoutPage = () => {
   const router = useRouter();
@@ -11,20 +12,22 @@ const CheckoutPage = () => {
   const selectedDate = searchParams.get('date');
   const selectedTimeSlot = searchParams.get('time');
   const [expert, setExpert] = useState(null);
+  const [loading, setLoading] = useState(true)
 
-  // Sample experts data (you can replace this with an API call to fetch expert details)
-  const experts = [
-    { id: '1', name: 'Dr. John Doe', expertise: 'Aerospace Engineer' },
-    { id: '2', name: 'Dr. Jane Smith', expertise: 'Aerospace Researcher' },
-    { id: '3', name: 'Dr. Alice Brown', expertise: 'Satellite Engineer' },
-  ];
 
-  useEffect(() => {
-    if (expertId) {
-      const fetchedExpert = experts.find((e) => e.id === expertId);
-      if (fetchedExpert) setExpert(fetchedExpert);
+
+ // Fetch expert data based on expertId
+ useEffect(() => {
+  if (expertId) {
+    const fetchedExpert = expertsData.find((e) => e.id === expertId);
+    if (fetchedExpert) {
+      setExpert(fetchedExpert);
+    } else {
+      console.error('Expert not found');
     }
-  }, [expertId]);
+    setLoading(false);
+  }
+}, [expertId]);
 
   const handleProceedToConfirmation = () => {
     if (expert && selectedDate && selectedTimeSlot) {
@@ -35,6 +38,14 @@ const CheckoutPage = () => {
       alert('Please make sure all fields are filled.');
     }
   };
+
+  if (loading) {
+    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading expert information...</p>;
+  }
+
+  if (!expert) {
+    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Expert not found.</p>;
+  }
 
   return (
     <div className="checkout-wrapper">
@@ -62,7 +73,7 @@ const CheckoutPage = () => {
             </button>
           </>
         ) : (
-          <p>Loading expert information...</p>
+          <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading expert information...</p>
         )}
       </div>
     </div>

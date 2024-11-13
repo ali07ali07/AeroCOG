@@ -8,7 +8,6 @@
   padding: 20px;
   border-radius: 20px;
   margin: 100px auto;
-  margin-top: 150px; 
   max-width: 670px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -23,17 +22,16 @@
   width: 100%;
 }
 
-/* Info Section */
+/* Profile info styling */
 .info {
-  font-size: 1.2em;
-  color: var(--text-color);
-  margin: 10px 0;
+  margin-bottom: 15px;
 }
 
 .infoLabel {
-  font-weight: 500;
-  color: var(--header-color);
+  font-weight: 600;
+  color: #555;
 }
+
 
 /* Sign Out Button */
 .signOutButton {
@@ -51,3 +49,133 @@
 .signOutButton:hover {
   background-color: #0056b3;
 }
+
+
+.infoLabel {
+  font-weight: bold;
+}
+.login{
+  font-size: xx-small;
+}
+
+.bookingsSection {
+  margin-top: 40px;
+}
+
+.bookingList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bookingItem {
+  background-color: transparent;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.bookingItem span {
+  display: block;
+  margin: 5px 0;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color:var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab button styling */
+.tabs button {
+  padding: 12px 30px;
+  background-color: var(--bg-color);
+  border: 2px solid #ddd;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border-radius: 10px 10px 0 0;
+  margin: 0 5px;
+}
+
+
+/* Tab hover effect */
+.tabs button:hover {
+  background-color: #f0f0f0;
+  border-color: #ff8c00;
+}
+
+/* Active tab styling */
+.activeTab {
+  background-color: #ff8c00;
+  color: var(--bg-color);
+  border-color: #ff8c00;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Tab content styling */
+.profileContent, .appointmentsContent {
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+/* Font styling for the profile and appointment lists */
+.profileHeader, .appointmentsContent h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+/* Booking history styling */
+.bookingList {
+  list-style-type: none;
+  padding: 0;
+}
+
+
+.bookingItem {
+  background-color: #fafafa;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.bookingItem:hover {
+  background-color: #fffae6;
+}
+
+.bookingItem span {
+  display: block;
+  margin: 5px 0;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Buttons */
+.resetButton, .signOutButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.resetButton:hover, .signOutButton:hover {
+  background-color: #0056b3;
+}
+/* 1 */

@@ -1,9 +1,11 @@
 'use client';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'; // Import from next/navigation for server components
-
-
 const ConfirmationPage = () => {
+  
+  useEffect(() => {
+    document.title = "Appointment - Booked!";
+  }, []);
   
   return (
     <>
@@ -237,7 +239,7 @@ const ConfirmationPage = () => {
           </defs>
         </svg>
       </div>
-    </section><Suspense fallback={<div>Loading...</div>}>
+    </section><Suspense fallback={<div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }} >Loading...</div>}>
         <ConfirmationContent />
       </Suspense></>
     
@@ -248,11 +250,15 @@ const ConfirmationContent = () => {
   const bookingId = searchParams.get('bookingId'); // Get query parameter
 
   return (
+    
     <div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>
-      
       <h1>Appointment Booked! 🎉</h1>
       <br />
-      <p>Your booking number is: {bookingId}</p>
+      <p>Your booking ID is: {bookingId}</p>
+      <br />
+      <p>Please save your booking ID for future reference.</p>
+      <br />
+      <p>If you have any questions, feel free to <a href="/contact">contact us</a>.</p>
       <br />
       <a href="/">Back to home</a>
       

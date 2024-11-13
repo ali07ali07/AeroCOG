@@ -31,7 +31,7 @@ const Blog = () => {
               </div>
             ))}
           </div>
-{/*}
+
           <div className="-mx-4 flex flex-wrap" data-wow-delay=".15s">
             <div className="w-full px-4">
               <ul className="flex items-center justify-center pt-8">
@@ -91,7 +91,7 @@ const Blog = () => {
               </ul>
             </div>
           </div>
-*/}
+
         </div>
       </section>
     </>

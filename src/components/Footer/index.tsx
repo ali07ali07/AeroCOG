@@ -151,6 +151,14 @@ const Footer = () => {
                       Refund Policy
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    >
+                      Terms &#38; Conditions
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -167,14 +175,6 @@ const Footer = () => {
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Get in Touch
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                    >
-                      Terms of Use
                     </Link>
                   </li>
                   <li>
@@ -205,7 +205,7 @@ const Footer = () => {
               <br></br>
               
               <a
-                href="https://aerocog.live"
+                href="https://aerocog.tech"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary"
