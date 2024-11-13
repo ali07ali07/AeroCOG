@@ -181,7 +181,7 @@ const Profile = () => {
                   ))}
                 </ul>
               ) : (
-                <p>No upcoming appointments</p>
+                <p style={{color: 'red'}}>No upcoming appointments</p>
               )}
             </div>
 

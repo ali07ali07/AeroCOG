@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -106,7 +106,7 @@ const CheckoutPage = () => {
   const displayTime = formattedTime;  // You can use 'HH:mm' format if you prefer 24-hour format
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Breadcrumb pageName={pageName} description={description} />
       <div className="checkout-page-wrapper">
         <div className="checkout-page-container mt-36 p-8 max-w-4xl mx-auto rounded-lg shadow-lg">
@@ -180,7 +180,7 @@ const CheckoutPage = () => {
           </form>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 
