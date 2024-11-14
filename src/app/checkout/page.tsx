@@ -102,7 +102,7 @@ const CheckoutPage = () => {
 
   // Make sure to only render the page once searchParams are set (client-side)
   if (!searchParams) {
-    return <p>Loading...</p>; // Add a loading state until we have search parameters
+    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>; // Add a loading state until we have search parameters
   }
 
   const { dateString, time } = searchParams;

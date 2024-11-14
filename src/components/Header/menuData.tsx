@@ -19,34 +19,35 @@ const menuData: Menu[] = [
     path: "/experts",
     newTab: false,
   },
-  
+
   {
-        id: 48,
-        title: "Profile",
-        path: "/profile",  
-        newTab: false,
-      },
-      {
     id: 3,
     title: "Support",
     path: "/contact",
     newTab: false,
   },
-      
   {
-        id: 46,
-        title: "Sign In",
-        path: "/signin",
-        newTab: false,
-      },
-  
+    id: 5,
+    title: "Sign Up as Expert",
+    path: "/signup-expert",
+    newTab: false,
+  },
+
+  {
+    id: 46,
+    title: "Sign In",
+    path: "/signin",
+    newTab: false,
+  },
+
   {
     id: 4,
     title: "Pages",
     newTab: false,
     submenu: [
+
       
-      
+
       {
         id: 47,
         title: "Sign Up",
@@ -86,6 +87,6 @@ const menuData: Menu[] = [
     ],
   },
 
-  
+
 ];
 export default menuData;

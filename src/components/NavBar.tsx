@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+{/* import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import menuData from "../components/Header/menuData"; 
@@ -58,3 +58,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+*/}

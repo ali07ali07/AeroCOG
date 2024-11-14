@@ -1,29 +1,33 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from './profile.module.css';
-import Breadcrumb from '../../components/Common/Breadcrumb';
-import { sendPasswordResetEmail } from "firebase/auth";
-import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { sendPasswordResetEmail, signOut, updateProfile, updateEmail, sendEmailVerification } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from "../../components/firebase";
+import styles from './profile.module.css';
 import { format } from 'date-fns';
+import Breadcrumb from '../../components/Common/Breadcrumb';
 
 const Profile = () => {
   const pageName = "Profile";
   const description = "";
   const router = useRouter();
+
+  // State for user data and UI handling
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [newName, setNewName] = useState<string>(user?.displayName || "");
+  const [newEmail, setNewEmail] = useState<string>(user?.email || "");
   const [activeTab, setActiveTab] = useState<string>("profile"); // Main tab (Profile / Appointments)
   const [appointments, setAppointments] = useState<any[]>([]);
+  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
   const [loadingAppointments, setLoadingAppointments] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // Fetch appointment history
   useEffect(() => {
     const fetchAppointmentHistory = async () => {
-
       if (!user) return;
       const q = query(
         collection(db, "appointments"),
@@ -67,6 +71,9 @@ const Profile = () => {
       if (user) {
         setUser(user);
         setLoading(false);
+        setNewName(user.displayName || "");
+        setNewEmail(user.email || "");
+
       } else {
         setError("No user found.");
         setLoading(false);
@@ -77,83 +84,160 @@ const Profile = () => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>;
-
-  if (error) return <p>{error}</p>;
+  if (loading) return <p style={{ textAlign: 'center', marginTop: '200px', marginBottom: '200px' }}>Loading...</p>;
+  if (error) return <p style={{ textAlign: "center", marginTop: "200px", marginBottom: '200px' }}>{error}</p>;
 
   const handleSignOut = () => {
-    auth.signOut();
+    signOut(auth);
+    router.push("/");
   };
 
-  // Filter upcoming and previous appointments based on the current date
+  // Handle updating user name and email
+  const handleUpdateProfile = async () => {
+    if (newEmail.trim() === "") {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    try {
+      const validEmail = newEmail.trim();
+      const user = auth.currentUser;
+
+      if (user) {
+        // Update the name first
+        await updateProfile(user, {
+          displayName: newName,
+        });
+
+        // Send verification email if email is being changed
+        if (validEmail !== user.email) {
+          await updateEmail(user, validEmail); // Update email
+          await sendEmailVerification(user); // Send verification email for new email
+          alert("Please verify your new email address.");
+        }
+
+        setError(null); // Clear any previous errors
+        alert("Profile updated successfully. Please verify your email address.");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError("Failed to update profile. Please : support@aerocog.tech");
+
+    } finally {
+      setLoadingUpdate(false);
+    }
+  };
+
+  // Filter upcoming appointments
   const currentDate = new Date();
-  const upcomingAppointments = appointments.filter(appointment => {
-    const appointmentDate = appointment.date ? new Date(appointment.date.seconds * 1000) : null;
-    return appointmentDate && appointmentDate >= currentDate;
-  }).sort((a, b) => {
-    const dateA = a.date ? new Date(a.date.seconds * 1000) : null;
-    const dateB = b.date ? new Date(b.date.seconds * 1000) : null;
-    return dateA && dateB ? dateA.getTime() - dateB.getTime() : 0;
-  });
+  const upcomingAppointments = appointments
+    .filter((appointment) => {
+      let appointmentDate;
+      if (appointment.date?.seconds) {
+        appointmentDate = new Date(appointment.date.seconds * 1000);
+      } else if (typeof appointment.date === "string") {
+        appointmentDate = new Date(appointment.date);
+      } else {
+        return false;
+      }
+      return appointmentDate >= currentDate;
+    })
+    .sort((a, b) => {
+      const dateA = a.date.seconds ? new Date(a.date.seconds * 1000) : new Date(a.date);
+      const dateB = b.date.seconds ? new Date(b.date.seconds * 1000) : new Date(b.date);
+      return dateA.getTime() - dateB.getTime();
+    });
 
-  const previousAppointments = appointments.filter(appointment => {
-    const appointmentDate = appointment.date ? new Date(appointment.date.seconds * 1000) : null;
-    return appointmentDate && appointmentDate < currentDate;
-  }).sort((a, b) => {
-    const dateA = a.date ? new Date(a.date.seconds * 1000) : null;
-    const dateB = b.date ? new Date(b.date.seconds * 1000) : null;
-    return dateB && dateA ? dateB.getTime() - dateA.getTime() : 0;
-  });
-
-  // Tab rendering
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
-
-  if (loadingAppointments) return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading appointments...</p>;
-
+  // Handle tab selection
+  const handleTabClick = (tab: string) => setActiveTab(tab);
 
   return (
     <>
-      <Breadcrumb pageName={pageName} description={description} />
-
-
       <div className={styles.profileContainer}>
-        {/* Tab Navigation for Profile vs Appointments */}
+        <Breadcrumb pageName={pageName} description={description} />
+
+
+        {/* Tab  */}
         <div className={styles.tabs}>
           <button
-            className={activeTab === "profile" ? styles.activeTab : ""}
             onClick={() => handleTabClick("profile")}
+            className={activeTab === "profile" ? styles.activeTab : styles.inactiveTab}
+
           >
             My Profile
           </button>
           <button
-            className={activeTab === "appointments" ? styles.activeTab : ""}
             onClick={() => handleTabClick("appointments")}
+            className={activeTab === "appointments" ? styles.activeTab : styles.inactiveTab}
+
           >
             My Appointments
           </button>
         </div>
 
         {/* "My Profile" Tab */}
+
         {activeTab === "profile" && (
           <div className={styles.profileContent}>
-            <h2 className={styles.profileHeader}>User Profile</h2>
-            <div className={styles.info}>
-              <span className={styles.infoLabel}>Name:</span> {user?.displayName || "N/A"}
+            <h2>Profile Information</h2>
+            <br />
+            <div>
+              {!isEditing ? (
+                <>
+                  <p><strong>Name:</strong> {user.displayName}</p>
+                  <br />
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <br />
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className={styles.editButton}
+                  >
+                    Edit Profile ?
+                  </button>
+                </>
+              ) : (
+                <>
+                  <label htmlFor="name">Name:</label>
+                  <input
+                    id="name"
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className={styles.inputField}
+                  />
+                  <label htmlFor="email">Email:</label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className={styles.inputField}
+                  />
+                  <button
+                    onClick={handleUpdateProfile}
+                    disabled={loadingUpdate}
+                    className={styles.updateButton}
+                  >
+                    {loadingUpdate ? "Updating..." : "Update Profile"}
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className={styles.cancelButton}
+                  >
+                    Cancel
+                  </button>
+                </>
+              )}
             </div>
-            <div className={styles.info}>
-              <span className={styles.infoLabel}>Email:</span> {user?.email || "N/A"}
-            </div>
+
             <button onClick={handlePasswordReset} className={styles.resetButton}>
               Reset Password
             </button>
             <div className={styles.info} id="login">
               <br />
-              <span className={styles.infoLogin}>Last Login: </span>
+              <span className={styles.infoLabel}>Last Login:</span>
               {user?.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime).toLocaleString() : "N/A"}
             </div>
-
             <button onClick={handleSignOut} className={styles.signOutButton}>
               Sign Out
             </button>
@@ -161,35 +245,41 @@ const Profile = () => {
         )}
 
         {/* "My Appointments" Tab */}
-
         {activeTab === "appointments" && (
           <div className={styles.appointmentsContent}>
-            <h3>Appointments</h3>
+            <h2 className={styles.appointmentsHeader}>Appointments</h2>
 
             {/* Upcoming Appointments */}
-            <div>
-              <h4>Upcoming Appointments</h4>
+            <div className={styles.upcomingSection}>
+              <h4 className={styles.sectionTitle}>Upcoming Appointments</h4>
+
               {upcomingAppointments.length > 0 ? (
-                <ul>
+                <div className={styles.bookingGrid}>
                   {upcomingAppointments.map((appointment, index) => (
-                    <li key={index}>
-                      <span>Expert: {appointment.expertName}</span>
-                      <span>Time: {appointment.time}</span>
-                      <span>Date: {appointment.date ? format(new Date(appointment.date.seconds * 1000), 'dd/MM/yyyy') : "Not Available"}</span>
-                      <span>Status: Booked</span>
+                    <li key={index} className={styles.bookingItem}>
+                      <span className={styles.bookingDetail}>Expert: {appointment.expertName || "N/A"}</span>
+                      <span className={styles.bookingDetail}>Time: {appointment.time || "N/A"}</span>
+                      <span className={styles.bookingDetail}>
+                        Date: {appointment.date
+                          ? typeof appointment.date === 'object' && appointment.date.seconds
+                            ? format(new Date(appointment.date.seconds * 1000), 'dd/MM/yyyy')
+                            : format(new Date(appointment.date), 'dd/MM/yyyy')
+                          : "Not Available"}
+                      </span>
+                      <span className={styles.statusBooked}>Status: Booked</span>
                     </li>
                   ))}
-                </ul>
+                </div>
               ) : (
-                <p style={{color: 'red'}}>No upcoming appointments</p>
+                <p className={styles.noAppointments}>No upcoming appointments</p>
               )}
             </div>
-
           </div>
         )}
       </div>
     </>
   );
+
 };
 
 export default Profile;
