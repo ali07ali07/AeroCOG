@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -14,15 +14,14 @@ const CheckoutPage = () => {
   const description = "Review your consultation details and complete the booking process.";
   const router = useRouter();
   
-  const [searchParams, setSearchParams] = useState(null); // Initialize as null
+  const [searchParams, setSearchParams] = useState(null); 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const [expert, setExpert] = useState(null); // State for expert data
+  const [expert, setExpert] = useState(null);
 
-  // Fetch user data and expert data
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,13 +34,13 @@ const CheckoutPage = () => {
       }
     });
 
-    // This effect will now run on the client side only
+    // Set the search parameters
     const urlParams = new URLSearchParams(window.location.search);
     const expertId = urlParams.get('expertId');
     const dateString = urlParams.get('date');
     const time = urlParams.get('time');
     
-    setSearchParams({ expertId, dateString, time }); // Set the state with the search params
+    setSearchParams({ expertId, dateString, time });
 
     if (expertId) {
       const selectedExpert = expertsData.find((e) => e.id === expertId);
@@ -59,8 +58,8 @@ const CheckoutPage = () => {
 
     // Validate and prepare data for Firestore
     const isValidDate = dateString && !isNaN(Date.parse(dateString));
-    const validDate = isValidDate ? new Date(dateString) : new Date(); // Keep as Date object
-    const validTime = time || 'Not Set'; // Fallback to 'Not Set' if time is not provided
+    const validDate = isValidDate ? new Date(dateString) : new Date();
+    const validTime = time || 'Not Set';
 
     if (!userName || !whatsappNumber) {
       alert("Please fill in all the details.");
@@ -70,7 +69,7 @@ const CheckoutPage = () => {
 
     // Combine date and time
     const [hours, minutes] = validTime.split(':');
-    validDate.setHours(parseInt(hours, 10), parseInt(minutes, 10)); // Set the time in the Date object
+    validDate.setHours(parseInt(hours, 10), parseInt(minutes, 10)); 
 
     // Convert to IST (Indian Standard Time: UTC +5:30)
     const istDate = toZonedTime(validDate, 'Asia/Kolkata');
@@ -81,7 +80,7 @@ const CheckoutPage = () => {
       userName,
       userEmail,
       whatsappNumber,
-      date: istDate.toISOString(), // Save as ISO string (with correct date and time in IST)
+      date: istDate.toISOString(),
       time: validTime,
       createdAt: new Date().toISOString(),
     };
@@ -100,23 +99,17 @@ const CheckoutPage = () => {
     }
   };
 
-  // Make sure to only render the page once searchParams are set (client-side)
   if (!searchParams) {
-    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>; // Add a loading state until we have search parameters
+    return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>;
   }
 
   const { dateString, time } = searchParams;
-
-  // Format the date from URL (which is in ISO string format)
   const formattedDate = dateString ? new Date(dateString) : new Date();
   const isValidDate = formattedDate && !isNaN(formattedDate.getTime());
   const finalDate = isValidDate ? formattedDate : new Date();
-
-  const formattedTime = time || 'Not Set';  // Use 'Not Set' as fallback if no time is provided
-
-  // Format the date and time
+  const formattedTime = time || 'Not Set';
   const displayDate = format(finalDate, 'dd/MM/yyyy');
-  const displayTime = formattedTime;  // You can use 'HH:mm' format if you prefer 24-hour format
+  const displayTime = formattedTime;
 
   return (
     <>
@@ -134,7 +127,6 @@ const CheckoutPage = () => {
 
           <div className="consultation-summary mt-6">
             <div className="text-center mb-4">
-              {/* Displaying expert's name dynamically */}
               <p><strong>Expert:</strong> {expert ? `Dr. ${expert.name}` : 'Expert not found'}</p>
               <br />
               <p><strong>Date:</strong> {isValidDate ? displayDate : 'Invalid date'}</p>
