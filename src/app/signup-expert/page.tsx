@@ -200,7 +200,7 @@ const ExpertSignUpForm = () => {
     <>
     <Breadcrumb pageName="Expert Sign Up" description="Sign up to become an expert" />
 
-    <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
+    <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[80px]">
     
     <form onSubmit={handleSubmit} className={styles.signUpForm}>
       <p style={{ textAlign: 'center', color: 'red', fontWeight: 'bold' }} className="text-dark dark:text-white text-lg mb-6">Please login, before onboarding as an expert. <i><a className='text-primary hover:underline' href='/signup' style={{color: 'blue', fontWeight: 'normal', }}>here</a></i></p>

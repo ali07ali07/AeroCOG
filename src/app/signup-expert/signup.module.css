@@ -1,7 +1,7 @@
 /* General Form Styles */
 .signUpForm {
   max-width: 600px;
-  margin: 250px auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: var(background-color);
   border-radius: 10px;
