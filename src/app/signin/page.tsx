@@ -31,7 +31,7 @@ const SigninPage = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       //console.log("Signed in with Google");
-      router.push("/landing");
+      router.push("/");
     } catch (error) {
       console.error("Error with Google Sign In", error);
     }
@@ -42,7 +42,7 @@ const SigninPage = () => {
     try {
       await signInWithPopup(auth, githubProvider);
       //console.log("Signed in with GitHub");
-      router.push("/landing");
+      router.push("/");
     } catch (error) {
       console.error("Error with GitHub Sign In", error);
     }
@@ -60,7 +60,7 @@ const SigninPage = () => {
       }
       await signInWithEmailAndPassword(auth, email, password);
       //console.log("Signed in with Email and Password");
-      router.push("/landing");
+      router.push("/");
     } catch (error) {
       if (error instanceof FirebaseError) {
       switch (error.code) {

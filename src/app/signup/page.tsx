@@ -79,7 +79,7 @@ const SignupPage = () => {
   // Use effect to handle redirection after authentication
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/landing");  // Redirect to landing page
+      router.push("/");  // Redirect to home page
     }
   }, [isAuthenticated, router]); 
   
@@ -255,6 +255,7 @@ const SignupPage = () => {
                         <a href="#0" className="text-primary hover:underline">
                           {" "}
                           Privacy Policy{" "}
+                          
                         </a>
                       </span>
                     </label>
