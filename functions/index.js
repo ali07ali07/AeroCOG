@@ -5,7 +5,6 @@ const formData = require("form-data");
 
 admin.initializeApp();
 
-
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: "api",

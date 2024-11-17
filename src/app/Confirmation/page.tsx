@@ -248,25 +248,25 @@ const ConfirmationPage = () => {
 const ConfirmationContent = () => {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get('bookingId'); // Get query parameter
-
+  if (!bookingId) {
+    return <div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading... Please wait while we retrieve your booking ID.</div>;
+  }
   return (
     
-    <div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>
-      <h1>Appointment Booked! 🎉</h1>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-2xl font-bold text-center">Appointment Booked! 🎉</h1>
       <br />
-      <p>Your booking ID is: {bookingId}</p>
+      <p>Your booking ID is: <strong>{bookingId}</strong></p>
       <br />
       <p>Please save your booking ID for future reference.</p>
       <br />
-      <p>If you have any questions, feel free to <a href="/contact">contact us</a>.</p>
+      <p className='text-center'>If you have any questions, feel free to get in touch! <a className='text-primary hover:underline' href='mailto:support@aerocog.tech'>support</a></p>
       <br />
-      <a href="/">Back to home</a>
+      <a className='text-center text-primary hover:underline' href='/'>Go back to home</a>
       
       </div>
       
   );
 };
 
-  
-
-  export default ConfirmationPage;
+export default ConfirmationPage;

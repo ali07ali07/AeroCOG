@@ -8,8 +8,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 interface Expert {
   id: number;
   name: string;
-  expertise: string;
-  bio: string;
+  designation: string;
+  shortIntro: string;
   photo: string;
 }
 
@@ -36,12 +36,9 @@ const ExpertsPage: React.FC<ExpertsPageProps> = ({ onSelectExpert }) => {
   }, []);
 
   const experts: Expert[] = [
-    { id: 1, name: 'Dr. John Doe', expertise: 'Aerospace Engineer', bio: 'Specialist in spacecraft systems and propulsion technologies.', photo: '/images/experts/john-doe.jpg' },
-    { id: 2, name: 'Dr. Jane Smith', expertise: 'Aerospace Researcher', bio: 'Expert in aerodynamics and high-performance materials.', photo: '/images/experts/jane-smith.jpg' },
-    { id: 3, name: 'Dr. Alice Brown', expertise: 'Satellite Engineer', bio: 'Focused on satellite communications and design.', photo: '/images/experts/alice.jpg' },
-    { id: 4, name: 'Er. Syed Ali', expertise: 'Web Dev',  bio:'Focused on nothing!', photo:'/images/experts/syed.jpg' },
-    { id: 5, name: 'Yousuf Ali', expertise: 'Web Dev',  bio:'Focused on nothing!', photo:'/images/experts/ali.jpg' },
-    { id: 6, name: 'Syed Oman', expertise: 'Web Dev',  bio:'Focused on nothing!', photo:'/images/experts/ali2.jpg' },
+    { id: 1, name: 'Dr. John Doe', designation: 'Aerospace Engineer', shortIntro: 'Specialist in spacecraft systems and propulsion technologies.', photo: '/images/experts/john-doe.jpg' },
+    { id: 5, name: 'Yousuf Ali', designation: 'Web Dev',  shortIntro:'Focused on nothing!', photo:'/images/experts/ali.jpg' },
+    
   ];
 
   return (

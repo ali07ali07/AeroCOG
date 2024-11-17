@@ -1,0 +1,90 @@
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const Mailgun = require("mailgun.js");
+const formData = require("form-data");
+
+admin.initializeApp();
+
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: "api",
+  key: functions.config().mailgun.api_key,
+});
+
+exports.notifyOnNewExpert = functions.firestore
+    .document("experts/{expertId}")
+    .onCreate(async (snap) => {
+      const expert = snap.data();
+      console.log("Expert data:", expert);
+
+      const {name, email} = expert;
+
+      if (!name || !email) {
+        console.error("Missing required fields", expert);
+        return null;
+      }
+
+      // Email to the expert
+      const expertMessage = {
+        from: "onboard@aerocog.tech",
+        to: email,
+        subject: `Application Received - AeroCOG Expert Program!`,
+        html: `
+      <div style="background-color: #a6a2a2; padding: 20px;">
+        <p>Dear ${name},</p>
+        <p>Thank you for submitting your application to join the AeroCOG Expert Program.</p> 
+        <p>We have received your details and are currently reviewing your application.</p>
+        <p>Our team will carefully evaluate the information you provided.</p>
+        <p>including performing necessary background checks, to ensure alignment with our platform standards.</p>
+        <p>You will receive an update on your application status within the next few days.</p>
+        <p> In the meantime, feel free to reach out if you have any questions.</p>
+        <br>
+        <p>Best regards,</p>
+        <p>AeroCOG Team</p>
+        <hr>
+        <p style="color:gray;">For support, contact us at 
+        <a href="mailto:support@aerocog.tech">support@aerocog.tech</a>.
+        </p>
+      </div>
+      `,
+      };
+
+      // Email to the admin
+      const adminMessage = {
+        from: "notifications@aerocog.tech",
+        to: "syedyusufali6626@gmail.com",
+        subject: "New Expert Joined - AeroCOG",
+        html: `
+        <p>Dear Admin,</p>
+        <p>A new expert has joined AeroCOG:</p>
+        <ul>
+          <li><strong>Name:</strong> ${name}</li>
+          <li><strong>Email:</strong> ${email}</li>
+        </ul>
+        <p>Check the firebase admin dashboard for more details.</p>
+        <br>
+        <p>Best regards,</p>
+        <p>AeroCOG Notifications</p>
+      `,
+      };
+
+      try {
+      // Send emails
+        const expertResponse = await mg.messages.create(
+            "aerocog.tech",
+            expertMessage,
+        );
+        console.log("Expert email sent successfully:", expertResponse);
+
+        const adminResponse = await mg.messages.create(
+            "aerocog.tech",
+            adminMessage,
+        );
+        console.log("Admin email sent successfully:", adminResponse);
+
+        return null;
+      } catch (error) {
+        console.error("Error sending emails:", error);
+        throw new Error("Failed to send emails");
+      }
+    });

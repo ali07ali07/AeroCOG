@@ -15,51 +15,7 @@ const expertsData = [
       { platform: 'Twitter', link: 'https://twitter.com/johndoe' }
     ]
   },
-  { 
-    id: '2', 
-    name: 'Dr. Jane Smith', 
-    designation: 'Aerospace Researcher', 
-    shortIntro: 'Expert in aerodynamics and high-performance materials.',
-    bio: 'Dr. Jane Smith specializes in aerodynamics...',
-    photo: '/images/experts/jane-smith.jpg', 
-    notableProjects: [
-      { name: 'Aerofoil Design for Jet Engines', link: '#2' },
-      { name: 'Wind Tunnel Testing', link: '#3' }
-    ],
-    socialLinks: [
-      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/janesmith' }
-    ]
-  },
-  {
-    id: '3',
-    name: 'Dr. Alice Brown',
-    designation: 'Setellite Engineer', 
-    shortIntro: 'Focused in setallite engineering',
-    bio: 'Dr. Jane Smith specializes in aerodynamics...',
-    photo: '/images/experts/alice.jpg', 
-    notableProjects: [
-      { name: 'Aerofoil Design for Jet Engines', link: '#2' },
-      { name: 'Wind Tunnel Testing', link: '#3' }
-    ],
-    socialLinks: [
-      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/janesmith' }
-    ]
-  },
-  {
-    id: '4',
-    name: 'Er, Syed Ali',
-    designation: 'Web Sev', 
-    shortIntro: 'Focused in setallite engineering',
-    bio: 'Dr. Jane Smith specializes in aerodynamics...',
-    photo: '/images/experts/syed.jpg', 
-    notableProjects: [
-      { name: 'Aerofoil Design for Jet Engines', link: '#2' },
-      { name: 'Wind Tunnel Testing', link: '#3' }
-    ],
-    socialLinks: [
-      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/janesmith' }
-    ]
-  },
+  
   
   {
     id: '5',
@@ -68,21 +24,6 @@ const expertsData = [
     shortIntro: 'Focused in setallite engineering',
     bio: 'Dr. Jane Smith specializes in aerodynamics...',
     photo: '/images/experts/ali.jpg', 
-    notableProjects: [
-      { name: 'Aerofoil Design for Jet Engines', link: '#2' },
-      { name: 'Wind Tunnel Testing', link: '#3' }
-    ],
-    socialLinks: [
-      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/janesmith' }
-    ]
-  },
-  {
-    id: '6',
-    name: 'Syed Oman',
-    designation: 'Setellite Engineer', 
-    shortIntro: 'Focused in setallite engineering',
-    bio: 'Dr. Jane Smith specializes in aerodynamics...',
-    photo: '/images/experts/ali1.jpg', 
     notableProjects: [
       { name: 'Aerofoil Design for Jet Engines', link: '#2' },
       { name: 'Wind Tunnel Testing', link: '#3' }

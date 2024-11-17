@@ -90,7 +90,7 @@ const CheckoutPage = () => {
       const documentId = docRef.id;
 
       alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
-      router.push('/Confirmation');
+      router.push(`/Confirmation?bookingId=${documentId}`);
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('There was an error booking your consultation.');
