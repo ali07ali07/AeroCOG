@@ -1,8 +1,21 @@
 [
   {
-    "origin": ["http://localhost:3000", "https://aerocog.tech"],
-    "method": ["GET", "POST", "PUT"],
-    "responseHeader": ["Content-Type", "Authorization"],
+    "origin": [
+      "http://localhost:3000",       
+      "https://aerocog-8af654b8a9d1.herokuapp.com/",
+      "https://aerocog.tech"
+
+    ],
+    "responseHeader": [
+      "Content-Type",
+      "Authorization"
+    ],
+    "method": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE"
+    ],
     "maxAgeSeconds": 3600
   }
 ]
