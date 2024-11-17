@@ -156,7 +156,7 @@ const Footer = () => {
                       href="/"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                      Terms &#38; Conditions
+                      Terms of Use
                     </Link>
                   </li>
                 </ul>
