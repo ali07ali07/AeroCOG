@@ -83,13 +83,14 @@ const CheckoutPage = () => {
       date: istDate.toISOString(),
       time: validTime,
       createdAt: new Date().toISOString(),
+      expertEmail: expert ? expert.email : 'Not Available',
     };
 
     try {
       const docRef = await addDoc(collection(db, 'appointments'), appointment);
       const documentId = docRef.id;
 
-      alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
+      //alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
       router.push(`/Confirmation?bookingId=${documentId}`);
     } catch (error) {
       console.error('Error adding document: ', error);

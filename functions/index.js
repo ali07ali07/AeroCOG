@@ -19,7 +19,7 @@ exports.sendAppointmentConfirmation = functions.firestore
 
       const {userName, userEmail, expertName, date, time} = appointment;
       const whatsappNumber = appointment.whatsappNumber || "N/A";
-
+      const expertEmail = appointment.expertEmail || "N/A";
       if (!userName || !userEmail || !expertName || !date || !time) {
         console.error("Missing required fields", appointment);
         return null;
@@ -78,10 +78,63 @@ exports.sendAppointmentConfirmation = functions.firestore
       `,
       };
 
+      // Message for the expert
+
+      const expertMessage = {
+        from: "appointments@aerocog.tech",
+        to: expertEmail,
+        subject: `New Appointment Scheduled with ${userName} - AeroCOG`,
+        html: `
+          <p>Dear ${expertName},</p>
+          
+          <p>You have a new appointment scheduled through AeroCOG.</p>
+          
+          <h3>Appointment Details:</h3>
+          <ul>
+            <li><strong>User:</strong> ${userName}</li>
+            <br>
+            <li><strong>Date:</strong> ${date}, UTC</li>
+            <br>
+            <li><strong>Time:</strong> ${time}</li>
+            <br>
+            <li><strong>User Email:</strong> ${userEmail}</li>
+            <br>
+            <li><strong>WhatsApp Number:</strong> ${whatsappNumber}</li>
+          </ul>
+          <br>
+  
+          <p>Kindly prepare for this appointment and let the user know in case of any changes.</p>
+          <p>For any issues, contact AeroCOG support.</p>
+  
+          <p>Best regards,</p>
+          <p>AeroCOG Team</p>
+  
+          <hr>
+          <br>
+          <p style="color:red;">
+            <strong>Disclaimer:</strong>
+            This appointment is subject to the terms and conditions of AeroCOG.
+          </p>
+  
+          <p>Thank you for being part of AeroCOG's expert network.</p>
+          <br>
+          <p>© 2025 AeroCOG. All rights reserved.</p>
+        `,
+      };
+
       try {
       // Send the email
         const response = await mg.messages.create("aerocog.tech", message);
         console.log("Email sent successfully:", response);
+
+        // Send email to expert
+        if (expertEmail !== "N/A") {
+          const expertResponse = await mg.messages.create("aerocog.tech", expertMessage);
+          console.log("Email sent successfully to expert:", expertResponse);
+        } else {
+          console.warn("Expert email not available, skipping email to expert.");
+        }
+
         return null;
       } catch (error) {
         console.error("Error sending email:", error);
