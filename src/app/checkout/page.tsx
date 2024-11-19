@@ -135,41 +135,41 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <h4 className="text-2xl font-semibold mt-6 mb-4">Enter Your Details</h4>
+          <h4 className="text-2xl font-semibold mt-6 mb-4">Check Your Details</h4>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="input-group">
-              <label htmlFor="userName" className="block">Your Name</label>
+              <label htmlFor="userName" className="mb-3 block text-sm text-dark dark:text-white">Your Name</label>
               <input
                 id="userName"
                 type="text"
                 value={userName}
-                className="input-field cursor-not-allowed"
+                className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none input-field cursor-not-allowed"
                 disabled
                 style={{ cursor: 'not-allowed' }}
               />
-              <p className="text-red-600 text-sm mt-1"> You can change your name on profile page</p>
+              <p className="text-red-600 text-sm mt-1"> You can update your name on profile page <i><a className='text-primary hover:underline' href='/profile'>here</a></i></p>
             </div>
 
             <div className="input-group">
-              <label htmlFor="userEmail" className="block">Email</label>
+              <label htmlFor="userEmail" className="mb-3 block text-sm text-dark dark:text-white">Email</label>
               <input
                 id="userEmail"
                 type="email"
                 value={userEmail}
-                className="input-field cursor-not-allowed"
+                className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none input-field cursor-not-allowed"
                 disabled
                 style={{ cursor: 'not-allowed' }}
               />
               <p className="text-red-600 text-sm mt-1">You cannot change your email ID!</p>
             </div>
             <div className="input-group">
-              <label htmlFor="whatsappNumber" className="block">WhatsApp Number</label>
+              <label htmlFor="whatsappNumber" className="mb-3 block text-sm text-dark dark:text-white">WhatsApp Number</label>
               <input
                 id="whatsappNumber"
                 type="tel"
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
-                className="input-field"
+                className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                 placeholder="Enter your WhatsApp number"
                 required
               />

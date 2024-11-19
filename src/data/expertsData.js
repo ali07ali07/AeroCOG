@@ -1,18 +1,20 @@
 const expertsData = [
-  { 
-    id: '1', 
-    name: 'Dr. John Doe', 
-    designation: 'Aerospace Engineer', 
-    shortIntro: 'Specialist in spacecraft systems and propulsion technologies.', 
-    bio: 'Dr. John Doe has over 20 years of experience in the aerospace industry... ',
-    photo: '/images/experts/john-doe.jpg', 
+  {
+    id: '1002',
+    name: 'Kannan Brahmaputran',
+    designation: 'Aerospace Engineering',
+    shortIntro: 'Gas Turbine, Aircraft Engines-Military and civil, Combustion, Thermodynamics, CFD',
+    bio: 'Aerospace Engineering expertise from a world class Aerospace companies GE, Pratt&Whitney and Rolls Royce Civil and Military Aerospace, with over twenty three years of experience. Knowledge and understanding of Aerospace Engineering design, manufacturing, testing and certification. Design and Development and Testing of civil large Aviation engine. Propulsion system in charge of GE F404 Engine, Flight Testing activities for LCA, Low by pass turbofan Engine Real time monitoring. Missile Integration with Aircraft, Missile Exhaust Plume at various flight altitudes, Impact study on Aircraft body and Engine Intake. Extensive experience in Thermal and Gas Turbine Exhaust jet. Gas Turbine Analytics, Aerodynamics, Military Aircraft Engine test and development, Mechanical Heat transfer R&D Thermodynamics, Combustion, Thermal Design, Cooling assessment for Rotating machine. CFD Modeling and Simulation. RCA Analysis of GE F404 Engine Gas turbine combustor, Reacting Flow Analysis for sub-sonic and supersonic Combustion.',
+    photo: '/images/experts/kannan.jpg',
+    mentorshipFocus: 'Technical advisory',
     notableProjects: [
-      { name: 'Mars Propulsion System', link: '#0' },
-      { name: 'Lunar Mission', link: '#1' }
+      { name: 'Aerofoil Design for Jet Engines'},
+      { name: 'Wind Tunnel Testing' }
     ],
+    mode: 'online & offline',
+    email: 'kanfb99@yahoo.com',
     socialLinks: [
-      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/johndoe' },
-      { platform: 'Twitter', link: 'https://twitter.com/johndoe' }
+      { platform: 'LinkedIn', link: 'https://www.linkedin.com/in/kannan-brahmaputran-90091645/' }
     ]
   },
   

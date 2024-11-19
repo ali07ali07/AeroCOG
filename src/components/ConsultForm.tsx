@@ -50,14 +50,14 @@ const ConsultForm = ({ selectedExpert }) => {
 
   // Handle date selection from calendar
   const handleDateChange = (date) => {
-  //  console.log('Selected Date:', date);
+    //  console.log('Selected Date:', date);
     setSelectedDate(date);
     setIsCalendarVisible(false);
   };
 
   // Handle time slot selection
   const handleTimeSlotSelect = (value) => {
-   // console.log('Selected Time Slot:', value);
+    // console.log('Selected Time Slot:', value);
     setSelectedTimeSlot(value);
   };
 
@@ -79,7 +79,7 @@ const ConsultForm = ({ selectedExpert }) => {
         message: 'Please select a date, time, and time slot.',
         type: 'error',
       });
-      
+
     }
   };
 
@@ -109,8 +109,8 @@ const ConsultForm = ({ selectedExpert }) => {
           ) : (
             <span>Image not available</span>
           )}
-          <h2 className="text-3xl font-semibold mt-4">{expert.name}</h2>
-          <p className="text-xl text-gray-600">{expert.expertise}</p>
+          <h2 className="text-3xl font-semibold mt-4">Dr. {expert.name}</h2>
+          <p className="text-xl text-gray-600">{expert.designation}</p>
         </div>
 
         {/* Date Selection */}
@@ -157,7 +157,10 @@ const ConsultForm = ({ selectedExpert }) => {
               {slot.label}
             </button>
           ))}
+
         </div>
+        <br />
+        <p className='text-red-400'>* Experts reserves the right to change time, they may contact you in case of rescheduling </p>
 
         {/* Proceed Button */}
         <div className="text-center">
@@ -165,6 +168,20 @@ const ConsultForm = ({ selectedExpert }) => {
             Proceed to Checkout
           </button>
         </div>
+        <br />
+        <span>
+          By consulting, means you agree to the
+          <a href="#0" className="text-primary hover:underline">
+            {" "}
+            Consultation Policy{" "}
+          </a>
+          , and our
+          <a href="#0" className="text-primary hover:underline">
+            {" "}
+            Privacy Policy{" "}
+
+          </a>
+        </span>
       </div>
     </div>
   );

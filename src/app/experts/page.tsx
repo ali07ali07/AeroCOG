@@ -4,13 +4,16 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { ExpertCard } from "@/components/ExpertCard";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+//import expertsData from '@/data/expertsData'; // Import expert data
 
 interface Expert {
   id: number;
   name: string;
   designation: string;
+  mentorshipFocus: string;
   shortIntro: string;
   photo: string;
+  
 }
 
 
@@ -36,8 +39,8 @@ const ExpertsPage: React.FC<ExpertsPageProps> = ({ onSelectExpert }) => {
   }, []);
 
   const experts: Expert[] = [
-    { id: 1, name: 'Dr. John Doe', designation: 'Aerospace Engineer', shortIntro: 'Specialist in spacecraft systems and propulsion technologies.', photo: '/images/experts/john-doe.jpg' },
-    { id: 5, name: 'Yousuf Ali', designation: 'Web Dev',  shortIntro:'Focused on nothing!', photo:'/images/experts/ali.jpg' },
+    { id: 1002, name: 'Kannan Brahmaputran', designation: 'Aerospace Engineering', mentorshipFocus:'Technical advisory' ,shortIntro: 'Gas Turbine, Aircraft Engines-Military and civil, Combustion, Thermodynamics, CFD.', photo: '/images/experts/kannan.jpg' },
+    { id: 5, name: 'Yousuf Ali', designation: 'Web Dev',  shortIntro:'Focused on nothing!',mentorshipFocus:'', photo:'/images/experts/ali.jpg' },
     
   ];
 

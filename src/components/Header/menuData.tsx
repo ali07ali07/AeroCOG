@@ -20,12 +20,7 @@ const menuData: Menu[] = [
     newTab: false,
   },
 
-  {
-    id: 3,
-    title: "Support",
-    path: "/contact",
-    newTab: false,
-  },
+  
   {
     id: 5,
     title: "Sign Up as Expert",
@@ -52,6 +47,20 @@ const menuData: Menu[] = [
         newTab: false,
         path: "/profile",
 
+      },
+
+      {
+        id: 34,
+        title: "Expert login",
+        path:"https://dashboard.aerocog.tech",
+        newTab: true,
+      },
+
+      {
+        id: 3,
+        title: "Support",
+        path: "/contact",
+        newTab: false,
       },
 
       {

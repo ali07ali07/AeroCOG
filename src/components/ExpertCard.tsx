@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import expertsData from '@/data/expertsData'; // Import expert data
 
 const ExpertCard = ({ expert }) => {
   const router = useRouter();
@@ -27,8 +28,9 @@ const ExpertCard = ({ expert }) => {
       </div>
 
       <h4 className="text-xl font-bold">{expert.name}</h4>
-      <p className="text-sm text-gray-600">{expert.expertise}</p>
-      <p className="text-sm text-gray-500 mt-2">{expert.bio}</p>
+      <br />
+      <p className="text-sm text-gray-600">{expert.designation}</p>
+      <p className="text-sm text-gray-500 mt-2">{expert.shortIntro}</p>
     </div>
   );
 };

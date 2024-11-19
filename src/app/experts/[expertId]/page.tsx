@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import expertsData from '@/data/expertsData'; // Import expert data
 import Image from 'next/image';
 import Breadcrumb from '@/components/Common/Breadcrumb';
-
+import React from 'react';
 
 const ExpertDetailPage = ({ params }) => {
   const pageName = "Details of Experts";
@@ -16,7 +16,7 @@ const ExpertDetailPage = ({ params }) => {
   const expert = expertsData.find((e) => e.id === expertId);
   
   if (!expert) {
-    return <div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Expert not found</div>; // Handle invalid expert ID
+    return <div style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center', color: 'red'}}>Expert not found! <i><a className='text-primary hover:underline ' href='/experts'>Find here!</a></i></div>; // Handle invalid expert ID
   }
   
   const handleConsult = () => {
@@ -25,10 +25,12 @@ const ExpertDetailPage = ({ params }) => {
   };
 
   return (
-    <>
+    <> 
     <Breadcrumb pageName={pageName} description={description} />
-      <header />
-      <section className="py-20 px-4" style={{ marginBottom: '50px', backgroundColor: 'transparent'}}>
+      <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[80px]">
+
+
+      <section className="py-5 px-2" >
         <div className="container mx-auto" >
           <div className="flex flex-col items-center space-y-8">
             {/* Profile Picture */}
@@ -67,8 +69,15 @@ const ExpertDetailPage = ({ params }) => {
               </div>
             </div>
 
+            <div className="mt-8 text-right max-w-2x1 mx-auto text-xl underline decoration-indigo-500 underline-offset-2">
+              <h1>
+                  About the Expert
+              </h1>
+
+            </div>
+
             {/* Expert Biography */}
-            <div className="mt-8 text-center max-w-2xl mx-auto">
+            <div  className="mt-8 text-justify max-w-4xl mx-auto text-base">
               <p>{expert.bio}</p>
             </div>
 
@@ -78,14 +87,71 @@ const ExpertDetailPage = ({ params }) => {
                 onClick={handleConsult}
                 className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition duration-300"
               >
-                Consult {expert.name}
+                Consult with Dr. {expert.name}
               </button>
             </div>
           </div>
         </div>
+        </section>
+        <div className="absolute left-0 top-0 z-[-1]">
+          <svg
+            width="1440"
+            height="969"
+            viewBox="0 0 1440 969"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <mask
+              id="mask0_95:1005"
+              style={{ maskType: "alpha" }}
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="1440"
+              height="969"
+            >
+              <rect width="1440" height="969" fill="#090E34" />
+            </mask>
+            <g mask="url(#mask0_95:1005)">
+              <path
+                opacity="0.1"
+                d="M1086.96 297.978L632.959 554.978L935.625 535.926L1086.96 297.978Z"
+                fill="url(#paint0_linear_95:1005)"
+              />
+              <path
+                opacity="0.1"
+                d="M1324.5 755.5L1450 687V886.5L1324.5 967.5L-10 288L1324.5 755.5Z"
+                fill="url(#paint1_linear_95:1005)"
+              />
+            </g>
+            <defs>
+              <linearGradient
+                id="paint0_linear_95:1005"
+                x1="1178.4"
+                y1="151.853"
+                x2="780.959"
+                y2="453.581"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient
+                id="paint1_linear_95:1005"
+                x1="160.5"
+                y1="220"
+                x2="1099.45"
+                y2="1192.04"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>       
+      
       </section>
-
-      <footer />
     </>
   );
 };
