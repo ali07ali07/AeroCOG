@@ -2,10 +2,10 @@
 import React from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import { useState , useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 //import { useRouter } from 'next/navigation';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
-
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import SEO from "@/components/Common/SEO";
 
 import {
   signInWithPopup,
@@ -29,16 +29,16 @@ const SignupPage = () => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
-   // Event handler for Google sign-in
-   const handleGoogleSignIn = async () => {
+  // Event handler for Google sign-in
+  const handleGoogleSignIn = async () => {
     try {
-      const userCredential= await signInWithPopup(authInstance, googleProvider);
-    //  console.log("Signed in with Google");
+      const userCredential = await signInWithPopup(authInstance, googleProvider);
+      //  console.log("Signed in with Google");
       // Send email verification
-    await sendEmailVerification(userCredential.user);
-    alert("Please verify your email before logging in.");
-      setIsAuthenticated(true); 
-      
+      await sendEmailVerification(userCredential.user);
+      alert("Please verify your email before logging in.");
+      setIsAuthenticated(true);
+
     } catch (error) {
       console.error("Error with Google Sign In", error);
       setError(error.message);
@@ -48,13 +48,13 @@ const SignupPage = () => {
   // Event handler for GitHub sign-in
   const handleGithubSignIn = async () => {
     try {
-      const userCredential= await signInWithPopup(authInstance, githubProvider);
-    //  console.log("Signed in with GitHub");
+      const userCredential = await signInWithPopup(authInstance, githubProvider);
+      //  console.log("Signed in with GitHub");
       // Send email verification
-    await sendEmailVerification(userCredential.user);
-    alert("Please verify your email before logging in.");
-      setIsAuthenticated(true); 
-     
+      await sendEmailVerification(userCredential.user);
+      alert("Please verify your email before logging in.");
+      setIsAuthenticated(true);
+
     } catch (error) {
       console.error("Error with GitHub Sign In", error);
       setError(error.message);
@@ -68,9 +68,9 @@ const SignupPage = () => {
       const userCredential = await createUserWithEmailAndPassword(authInstance, email, password);
       const user = userCredential.user;
       // Send email verification
-    await sendEmailVerification(userCredential.user);
-    alert("Please verify your email before logging in.");
-       
+      await sendEmailVerification(userCredential.user);
+      alert("Please verify your email before logging in.");
+
       setIsAuthenticated(true);
     } catch (err) {
       setError(err.message);  // Handle errors
@@ -81,10 +81,15 @@ const SignupPage = () => {
     if (isAuthenticated) {
       router.push("/");  // Redirect to home page
     }
-  }, [isAuthenticated, router]); 
-  
+  }, [isAuthenticated, router]);
+
   return (
     <>
+      <SEO
+        title="Sign Up"
+        description="Sign up to create your account"
+        keywords="Sign up, create account, register, Create your account for free, Join us, Aerocog, Signup for Aerocog"
+      />
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
@@ -97,8 +102,8 @@ const SignupPage = () => {
                   It&apos;s totally free and super easy
                 </p>
                 <button
-                onClick={handleGoogleSignIn}
-                 className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                  onClick={handleGoogleSignIn}
+                  className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -136,8 +141,8 @@ const SignupPage = () => {
                 </button>
 
                 <button
-                onClick={handleGithubSignIn}
-                className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                  onClick={handleGithubSignIn}
+                  className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       fill="currentColor"
@@ -200,7 +205,7 @@ const SignupPage = () => {
                   <div className="mb-8">
                     <label
                       htmlFor="password"
-                      
+
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
                       {" "}
@@ -255,7 +260,7 @@ const SignupPage = () => {
                         <a href="#0" className="text-primary hover:underline">
                           {" "}
                           Privacy Policy{" "}
-                          
+
                         </a>
                       </span>
                     </label>

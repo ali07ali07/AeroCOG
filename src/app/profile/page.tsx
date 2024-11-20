@@ -7,6 +7,7 @@ import { db, auth } from "../../components/firebase";
 import styles from './profile.module.css';
 import { format } from 'date-fns';
 import Breadcrumb from '../../components/Common/Breadcrumb';
+import SEO from '@/components/Common/SEO';
 
 const Profile = () => {
   const pageName = "Profile";
@@ -153,6 +154,11 @@ const Profile = () => {
 
   return (
     <>
+      <SEO
+        title="User Profile - AeroCOG"
+        description="User profile page for AeroCOG"
+        keywords="AeroCOG, User Profile, Profile, Appointments, check your upcomming appointments, update your profile, reset password, and more, Aerocog"
+      />
       <div className={styles.profileContainer}>
         <Breadcrumb pageName={pageName} description={description} />
 

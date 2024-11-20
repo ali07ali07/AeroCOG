@@ -1,7 +1,13 @@
 import Image from "next/image";
-
+import SEO from ".././Common/SEO";
 const AboutSectionTwo = () => {
   return (
+    <>
+     <SEO 
+    title="About Page for Aerocog" 
+    description="This is the about page for Aerocog, Aerocog is an consulting servive provider for aerospace industry"
+    keywords= "Aerospace, Aerocog, Consulting, Aerospace consulting, Aerocog consulting, Experts, Aerospace experts, Phd experts, Aerospace Phd experts, Aerospace industry, Aerospace industry experts, Aerospace industry consulting, Aerospace industry consulting experts, Aerospace industry consulting services, Aerospace industry consulting services" 
+    />
     <section className="py-16 md:py-20 lg:py-28">
       <div className="container">
         <div className="-mx-4 flex flex-wrap items-center">
@@ -60,6 +66,7 @@ const AboutSectionTwo = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

@@ -1,7 +1,13 @@
 import Link from "next/link";
+import SEO from "../Common/SEO";
+
 const Hero = () => {
   return (
-    <>
+    <> <SEO
+      title="Aerocog - Your Aerospace Consulting Platform"
+      description="Bridging expertise and vision in aerospace"
+      keywords="Aerospace, Aerocog, Consulting, Aerospace consulting, Aerocog consulting, Experts, Aerospace experts, Phd experts, Aerospace Phd experts, Aerospace industry, Aerospace industry experts, Aerospace industry consulting, Aerospace industry consulting experts, Aerospace industry consulting services, Aerospace industry consulting services"
+    />
       <section
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"

@@ -116,11 +116,12 @@ const ConsultForm = ({ selectedExpert }) => {
         {/* Date Selection */}
         <h4>Select a Date</h4>
         <div className="relative mb-6">
+          
           <input
             type="text"
             value={selectedDate ? format(selectedDate, 'dd/MM/yyyy') : ''}
             onFocus={() => setIsCalendarVisible(true)}
-            className="datetime-input p-2 w-full border border-gray-300 rounded-md"
+            className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
             readOnly
             placeholder='Select a date'
           />
@@ -171,12 +172,12 @@ const ConsultForm = ({ selectedExpert }) => {
         <br />
         <span>
           By consulting, means you agree to the
-          <a href="#0" className="text-primary hover:underline">
+          <a href="/documents" className="text-primary hover:underline">
             {" "}
             Consultation Policy{" "}
           </a>
           , and our
-          <a href="#0" className="text-primary hover:underline">
+          <a href="/documnets" className="text-primary hover:underline">
             {" "}
             Privacy Policy{" "}
 

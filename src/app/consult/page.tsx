@@ -8,6 +8,8 @@ import Header from '../../components/Header';
 // import ExpertsPage from '../experts/page';
 import dynamic from 'next/dynamic'; // Import dynamic for lazy loading
 import expertsData from '@/data/expertsData';
+import SEO from '@/components/Common/SEO';
+
 
 // Dynamically import ConsultForm so it's only loaded on the client side
 const ConsultForm = dynamic(() => import('@/components/ConsultForm'), {
@@ -72,13 +74,20 @@ const ConsultPage = () => {
   }
 
   return (
-    <div>
-      <Header />
-      <Breadcrumb pageName={pageName} description={description} />
-      <Suspense fallback={<p>Loading consult form...</p>}>
-        <ConsultPageContent />
-      </Suspense>
-    </div>
+    <>
+      <SEO
+        title="Consultation"
+        description="Select a date and book your consultation."
+        keywords='consultation, book consultation, schedule consultation'
+      />
+      <div>
+        <Header />
+        <Breadcrumb pageName={pageName} description={description} />
+        <Suspense fallback={<p>Loading consult form...</p>}>
+          <ConsultPageContent />
+        </Suspense>
+      </div>
+    </>
   );
 };
 

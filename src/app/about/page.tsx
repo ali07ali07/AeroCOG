@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 const AboutPage = () => {
   return (
     <>
+      
       <Breadcrumb
         pageName="About Page"
         description="AeroCOG is your gateway to the aerospace industry, connecting eager learners with experienced professionals who are passionate about sharing their knowledge.

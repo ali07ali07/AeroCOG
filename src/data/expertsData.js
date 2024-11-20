@@ -25,7 +25,8 @@ const expertsData = [
     designation: 'Web Dev', 
     shortIntro: 'Focused in setallite engineering',
     bio: 'Dr. Jane Smith specializes in aerodynamics...',
-    photo: '/images/experts/ali.jpg', 
+    photo: '/images/experts/ali.jpg',
+    email: 'syedyusufali6626@gmail.com', 
     notableProjects: [
       { name: 'Aerofoil Design for Jet Engines', link: '#2' },
       { name: 'Wind Tunnel Testing', link: '#3' }

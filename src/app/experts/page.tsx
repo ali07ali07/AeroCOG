@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ExpertCard } from "@/components/ExpertCard";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 //import expertsData from '@/data/expertsData'; // Import expert data
+import SEO from '@/components/Common/SEO';
 
 interface Expert {
   id: number;
@@ -13,7 +14,7 @@ interface Expert {
   mentorshipFocus: string;
   shortIntro: string;
   photo: string;
-  
+
 }
 
 
@@ -32,40 +33,45 @@ const ExpertsPage: React.FC<ExpertsPageProps> = ({ onSelectExpert }) => {
       router.push(`/experts/${expert.id}`); // This pushes to `ExpertDetailPage` for the expert
     }
   };
-  
+
 
   React.useEffect(() => {
     document.title = "Our Experts - AeroCOG";
   }, []);
 
   const experts: Expert[] = [
-    { id: 1002, name: 'Kannan Brahmaputran', designation: 'Aerospace Engineering', mentorshipFocus:'Technical advisory' ,shortIntro: 'Gas Turbine, Aircraft Engines-Military and civil, Combustion, Thermodynamics, CFD.', photo: '/images/experts/kannan.jpg' },
-    { id: 5, name: 'Yousuf Ali', designation: 'Web Dev',  shortIntro:'Focused on nothing!',mentorshipFocus:'', photo:'/images/experts/ali.jpg' },
-    
+    { id: 1002, name: 'Kannan Brahmaputran', designation: 'Aerospace Engineering', mentorshipFocus: 'Technical advisory', shortIntro: 'Gas Turbine, Aircraft Engines-Military and civil, Combustion, Thermodynamics, CFD.', photo: '/images/experts/kannan.jpg' },
+    { id: 5, name: 'Yousuf Ali', designation: 'Web Dev', shortIntro: 'Focused on nothing!', mentorshipFocus: '', photo: '/images/experts/ali.jpg' },
+
   ];
 
   return (
     <>
+      <SEO
+        title="Our Experts"
+        description="Connect with top aerospace professionals ready to bring their knowledge and expertise to your projects."
+        keywords='aerospace, experts, professionals, mentorship, advisory, Aerospace Engineering, Gas Turbine, Aircraft Engines-Military and civil, Combustion, Thermodynamics, CFD'
+      />
       <Breadcrumb
         pageName="Our Experts"
         description="Connect with top aerospace professionals ready to bring their knowledge and expertise to your projects."
       />
 
       <section className="pb-[120px] pt-[120px]">
-        <div className="container" style={{backgroundColor: 'transparent'}}>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"> 
+        <div className="container" style={{ backgroundColor: 'transparent' }}>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {experts.map((expert) => (
               <div
                 key={expert.id}
                 onClick={() => handleSelectExpert(expert)}
-                className="cursor-pointer transform transition duration-300 hover:scale-105" 
+                className="cursor-pointer transform transition duration-300 hover:scale-105"
               >
                 <ExpertCard expert={expert} />
               </div>
             ))}
           </div>
 
-          
+
           <div className="-mx-4 flex flex-wrap" data-wow-delay=".15s">
             <div className="w-full px-4">
               <ul className="flex items-center justify-center pt-8">

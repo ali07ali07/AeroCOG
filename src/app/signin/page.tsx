@@ -5,7 +5,7 @@ import { useState } from "react";
 //import { useRouter } from "next/compat/router";
 import { FirebaseError } from "firebase/app";
 import { useRouter } from 'next/navigation';
-
+import SEO from '@/components/Common/SEO';
 
 import {
   signInWithEmailAndPassword,
@@ -20,13 +20,13 @@ const SigninPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
-  
 
-    // Google and GitHub provider instances
-    const googleProvider = new GoogleAuthProvider();
-    const githubProvider = new GithubAuthProvider();
 
-      // Event handler for Google sign-in
+  // Google and GitHub provider instances
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
+  // Event handler for Google sign-in
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -51,7 +51,7 @@ const SigninPage = () => {
   // Event handler for email/password sign-in
   const handleEmailSignIn = async (event: React.FormEvent) => {
     event.preventDefault(); // Prevent form from submitting
-   // console.log("Email:", email);  // Confirm email value
+    // console.log("Email:", email);  // Confirm email value
     //console.log("Password:", password);  // Confirm password value
     try {
       if (!email || !password) {
@@ -63,29 +63,34 @@ const SigninPage = () => {
       router.push("/");
     } catch (error) {
       if (error instanceof FirebaseError) {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          setError("Invalid email format.");
-          break;
-        case 'auth/user-not-found':
-          setError("User not found.");
-          break;
-        case 'auth/wrong-password':
-          setError("Incorrect password.");
-          break;
-        default:
-          setError("Error signing in. Please try again.");
-          console.error("Firebase error:", error);
+        switch (error.code) {
+          case 'auth/invalid-email':
+            setError("Invalid email format.");
+            break;
+          case 'auth/user-not-found':
+            setError("User not found.");
+            break;
+          case 'auth/wrong-password':
+            setError("Incorrect password.");
+            break;
+          default:
+            setError("Error signing in. Please try again.");
+            console.error("Firebase error:", error);
+        }
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+        console.error("Unexpected error:", error);
       }
-    } else {
-      setError("An unexpected error occurred. Please try again.");
-      console.error("Unexpected error:", error);
     }
-  }
-};
-  
+  };
+
   return (
     <>
+      <SEO
+        title="Sign In"
+        description="Sign in to your account for a faster checkout."
+        keywords="Sign In, Login, Account, Checkout, Join aerocog, add boost to your career, Aerocog"
+      />
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
@@ -98,8 +103,8 @@ const SigninPage = () => {
                   Login to your account for a faster checkout.
                 </p>
                 <button
-                 onClick={handleGoogleSignIn}
-                 className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                  onClick={handleGoogleSignIn}
+                  className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -136,9 +141,9 @@ const SigninPage = () => {
                   Sign in with Google
                 </button>
 
-                <button 
-                onClick={handleGithubSignIn}
-                className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                <button
+                  onClick={handleGithubSignIn}
+                  className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       fill="currentColor"
@@ -169,7 +174,7 @@ const SigninPage = () => {
                     <label
                       htmlFor="email"
                       className="mb-3 block text-sm text-dark dark:text-white"
-                      
+
                     >
                       Your Email
                     </label>
@@ -230,7 +235,7 @@ const SigninPage = () => {
                         Keep me signed in
                       </label>
                     </div>
-                   {/* <div>
+                    {/* <div>
                       <a
                         href="#0"
                         className="text-sm font-medium text-primary hover:underline"
@@ -241,7 +246,7 @@ const SigninPage = () => {
                   </div>
                   <div className="mb-6">
                     <button type="submit"
-                     className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                      className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
                       Sign in
                     </button>
                   </div>
