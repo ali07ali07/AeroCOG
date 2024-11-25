@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SEO from "../Common/SEO";
+import CookieBanner from "../Common/CookieBanner";
 
 const Hero = () => {
   return (
@@ -17,29 +18,39 @@ const Hero = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Bridging expertise and vision in aerospace
+                  Bridging expertise and vision in aerospace
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                We&apos;re here to bridge the gap between aerospace experts and early-stage startups. aerocog connects innovative startups with seasoned professionals for mentorship, technical guidance and idea validation, helping fresh ideas take flight.
+                  We&apos;re here to bridge the gap between aerospace experts and early-stage startups. aerocog connects innovative startups with seasoned professionals for mentorship, technical guidance and idea validation, helping fresh ideas take flight.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link
-                    href="/consult"
+                    href="/experts"
                     className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
                   >
-                    🔥 Consult Now
+                    🔥 Find Your Expert
                   </Link>
                   <Link
-                    href="/experts"
+                    href="/signup-expert"
                     className="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5"
                   >
-                    Explore Experts 🚀
+                    Join as Expert 🚀
                   </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {/*}
+        <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
+        <img
+          src="/images/rocket.svg"
+          alt="Rocket Illustration"
+          className="object-cover"
+        />
+        </div>
+        */}
+        
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
@@ -178,6 +189,7 @@ const Hero = () => {
             </defs>
           </svg>
         </div>
+        
         <div className="absolute bottom-0 left-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="364"
@@ -281,6 +293,7 @@ const Hero = () => {
             </defs>
           </svg>
         </div>
+        <CookieBanner />
       </section>
     </>
   );

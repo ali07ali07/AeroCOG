@@ -137,7 +137,9 @@ const Footer = () => {
                 <ul>
                   <li>
                     <Link
-                      href="/"
+                      href="/_docs/privacy-policy.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Privacy Policy
@@ -145,7 +147,9 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      href="/"
+                      href="/_docs/refund-policy.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Refund Policy
@@ -153,11 +157,24 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      href="/"
+                      href="/_docs/terms-of-use.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Terms of Use
                     </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/_docs/cookie-policy.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    >
+                      Cookie Policy
+                    </Link>
+                    
                   </li>
                 </ul>
               </div>

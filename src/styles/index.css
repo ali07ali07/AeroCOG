@@ -371,3 +371,42 @@ input {
 .checkout-page-wrapper{
   background: transparent;
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust as per your theme */
+  color: white;
+  padding: 16px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+.cookie-banner.hidden {
+  animation: fadeOutDown 0.5s ease-in-out;
+  pointer-events: none;
+}

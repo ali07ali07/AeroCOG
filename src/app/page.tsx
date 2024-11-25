@@ -9,17 +9,17 @@ import Hero from "@/components/Hero";
 //import Pricing from "@/components/Pricing";
 //import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
-import { Metadata } from "next";
+import SEO from '@/components/Common/SEO';
 
-export const metadata: Metadata = {
-  title: "Aerocog | Connecting Aero Enthusiasts",
-  description: "This is Home for AeroCOG ",
-  // other metadata
-};
+
 
 export default function Home() {
   return (
     <>
+      <SEO
+        title="Aerocog - Aerospace Consulting Platform"
+        description="Explore expert aerospace consultants at Aerocog, the premier platform for connecting industry specialists and newcomers."
+      />
       <ScrollUp />
       <Hero />
       <Features />

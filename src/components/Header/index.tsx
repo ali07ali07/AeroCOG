@@ -113,6 +113,7 @@ const Header = () => {
                               ? "text-primary dark:text-white"
                               : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"
                           }`}
+                          onClick={() => setNavbarOpen(false)} // Close the navbar
                         >
                           {menuItem.title}
                         </Link>
@@ -121,6 +122,7 @@ const Header = () => {
                           <p
                             onClick={() => handleSubmenu(index)}
                             className="flex cursor-pointer items-center justify-between py-2 text-base text-dark group-hover:text-primary dark:text-white/70 dark:group-hover:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6"
+                            aria-expanded={openIndex === index}
                           >
                             {menuItem.title}
                             <span className="pl-3">
@@ -139,11 +141,12 @@ const Header = () => {
                               openIndex === index ? "block" : "hidden"
                             }`}
                           >
-                            {menuItem.submenu.map((submenuItem, index) => (
+                            {menuItem.submenu.map((submenuItem, subindex) => (
                               <Link
                                 href={submenuItem.path}
-                                key={index}
+                                key={subindex}
                                 className="block rounded py-2.5 text-sm text-dark hover:text-primary dark:text-white/70 dark:hover:text-white lg:px-3"
+                                onClick={() => setOpenIndex(-1)} // Close submenu on click
                               >
                                 {submenuItem.title}
                               </Link>
