@@ -14,6 +14,19 @@ module.exports = {
       padding: "1rem",
     },
 
+    theme: {
+      extend: {
+        keyframes: {
+          draw: {
+            '0%': { strokeDasharray: '0 120' },
+            '100%': { strokeDasharray: '120 120' },
+          },
+        },
+        animation: {
+          draw: 'draw 1s ease-out forwards',
+        },
+      },
+    },
     screens: {
       xs: "450px",
       // => @media (min-width: 450px) { ... }

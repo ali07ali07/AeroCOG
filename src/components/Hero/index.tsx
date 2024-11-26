@@ -17,9 +17,24 @@ const Hero = () => {
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
+
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Bridging expertise and vision in aerospace
+                  Bridging expertise and vision in{" "}
+                  <span className="relative inline-block group">
+                    aerospace
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 120 20"
+                      className="absolute bottom-0 left-0 w-full h-[0.35em] fill-current text-blue-500 group-hover:text-red-500 transition-colors duration-300"
+                      preserveAspectRatio="none"
+                    >
+                      <path d="M2,18 C30,10 90,10 118,18 L118,20 L2,20 Z" />
+                    </svg>
+                  </span>
+
                 </h1>
+
+
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
                   We&apos;re here to bridge the gap between aerospace experts and early-stage startups. aerocog connects innovative startups with seasoned professionals for mentorship, technical guidance and idea validation, helping fresh ideas take flight.
                 </p>
@@ -50,7 +65,7 @@ const Hero = () => {
         />
         </div>
         */}
-        
+
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
@@ -189,7 +204,7 @@ const Hero = () => {
             </defs>
           </svg>
         </div>
-        
+
         <div className="absolute bottom-0 left-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="364"
