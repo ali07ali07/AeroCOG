@@ -31,7 +31,9 @@ const SigninPage = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       //console.log("Signed in with Google");
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 3000); // 3 seconds delay
     } catch (error) {
       console.error("Error with Google Sign In", error);
     }

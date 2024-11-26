@@ -46,12 +46,12 @@ const CookieBanner: React.FC = () => {
       >
         <p>
           We use cookies to ensure you get the best experience on our website.
-          Learn more in our <a href="/privacy-policy">Privacy Policy</a>.
+          Learn more in our <a href="/_docs/privacy-policy.html" target="_blank" className="underline decoration-indigo-500 underline-offset-2">Privacy Policy</a>.
         </p>
         <div>
           <button
             onClick={handleAccept}
-            style={{ marginRight: "8px" }}
+            style={{ marginRight: "15px" }}
             className="text-primary hover:underline underline-offset-2"
           >
             Accept
