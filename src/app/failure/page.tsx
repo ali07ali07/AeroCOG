@@ -1,8 +1,8 @@
-// src/app/failure/page.tsx
 "use client";
 import { useSearchParams } from 'next/navigation';
+import React, { Suspense } from 'react';
 
-export default function FailurePage() {
+function FailureContent() {
   const searchParams = useSearchParams();
   const status = searchParams.get('status'); // "cancel" or "failure"
   const message =
@@ -15,5 +15,13 @@ export default function FailurePage() {
       <h1>Payment Failed</h1>
       <p>{message}</p>
     </div>
+  );
+}
+
+export default function FailurePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <FailureContent />
+    </Suspense>
   );
 }
