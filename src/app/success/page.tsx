@@ -43,7 +43,7 @@ const SuccessPage = () => {
           router.push(`/confirmation?bookingId=${docRef.id}`);
         })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error("Error adding document: ", error.message);
           alert("There was an error with the booking. Please contact support@aerocog.tech");
         });
     } else {
