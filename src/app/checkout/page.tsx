@@ -3,18 +3,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../components/firebase"; 
+import { db } from "../../components/firebase";
 import { format } from "date-fns";
 import { toZonedTime } from 'date-fns-tz'; // Import the conversion function
 import Breadcrumb from "../../components/Common/Breadcrumb";
 import expertsData from "@/data/expertsData";
+import axios from "axios";
 
 const CheckoutPage = () => {
   const pageName = "Checkout";
   const description = "Review your consultation details and complete the booking process.";
   const router = useRouter();
-  
-  const [searchParams, setSearchParams] = useState(null); 
+
+  const [searchParams, setSearchParams] = useState(null);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
@@ -34,12 +35,11 @@ const CheckoutPage = () => {
       }
     });
 
-    // Set the search parameters
     const urlParams = new URLSearchParams(window.location.search);
     const expertId = urlParams.get('expertId');
     const dateString = urlParams.get('date');
     const time = urlParams.get('time');
-    
+
     setSearchParams({ expertId, dateString, time });
 
     if (expertId) {
@@ -50,59 +50,57 @@ const CheckoutPage = () => {
     return () => unsubscribe();
   }, [router]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const { expertId, dateString, time } = searchParams || {};
-
-    // Validate and prepare data for Firestore
-    const isValidDate = dateString && !isNaN(Date.parse(dateString));
-    const validDate = isValidDate ? new Date(dateString) : new Date();
-    const validTime = time || 'Not Set';
-
-    if (!userName || !whatsappNumber) {
-      alert("Please fill in all the details.");
-      setLoading(false);
-      return;
-    }
-
-    // Combine date and time
-    const [hours, minutes] = validTime.split(':');
-    validDate.setHours(parseInt(hours, 10), parseInt(minutes, 10)); 
-
-    // Convert to IST (Indian Standard Time: UTC +5:30)
-    const istDate = toZonedTime(validDate, 'Asia/Kolkata');
-
-    const appointment = {
-      expertId,
-      expertName: expert ? expert.name : 'Not Available',
-      userName,
-      userEmail,
-      whatsappNumber,
-      date: istDate.toISOString(),
-      time: validTime,
-      createdAt: new Date().toISOString(),
-      expertEmail: expert ? expert.email : 'Not Available',
-    };
-
-    try {
-      const docRef = await addDoc(collection(db, 'appointments'), appointment);
-      const documentId = docRef.id;
-
-      //alert(`Consultation booked successfully! Your booking ID is: ${documentId}`);
-      router.push(`/Confirmation?bookingId=${documentId}`);
-    } catch (error) {
-      console.error('Error adding document: ', error);
-      alert('There was an error booking your consultation.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (!searchParams) {
     return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>;
   }
+
+  async function initiatePayment() {
+    const paymentDetails = {
+      firstname: userName, // Dynamic value from the form state
+      email: userEmail, // Dynamic value from the form state
+      amount: "1.00", // Dynamic value based on the consultation
+      productinfo: `Consultation with ${expert ? `Dr. ${expert.name}` : 'expert'}`, // Dynamic info
+      txnid: "txn_" + new Date().getTime(), // Unique transaction ID
+      phone: whatsappNumber, // Dynamic value from the form state
+    };
+  
+    try {
+      // Call the backend to get the payment payload
+      const response = await fetch("/api/payu/initiate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentDetails),
+      });
+  
+      const { payload } = await response.json();
+  
+      if (payload) {
+        // Redirect to PayU with the generated payload
+        const payuForm = document.createElement("form");
+        payuForm.method = "POST";
+        payuForm.action = "https://secure.payu.in/_payment";
+  
+        // Add payload fields to the form
+        for (const key in payload) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = payload[key];
+          payuForm.appendChild(input);
+        }
+  
+        document.body.appendChild(payuForm);
+        payuForm.submit();
+      }
+    } catch (error) {
+      console.error("Payment initiation failed:", error);
+    }
+  }
+  
+  
+
 
   const { dateString, time } = searchParams;
   const formattedDate = dateString ? new Date(dateString) : new Date();
@@ -137,7 +135,7 @@ const CheckoutPage = () => {
           </div>
 
           <h4 className="text-2xl font-semibold mt-6 mb-4">Check Your Details</h4>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form className="space-y-6">
             <div className="input-group">
               <label htmlFor="userName" className="mb-3 block text-sm text-dark dark:text-white">Your Name</label>
               <input
@@ -148,7 +146,6 @@ const CheckoutPage = () => {
                 disabled
                 style={{ cursor: 'not-allowed' }}
               />
-              <p className="text-red-600 text-sm mt-1"> You can update your name on profile page <i><a className='text-primary hover:underline' href='/profile'>here</a></i></p>
             </div>
 
             <div className="input-group">
@@ -161,7 +158,6 @@ const CheckoutPage = () => {
                 disabled
                 style={{ cursor: 'not-allowed' }}
               />
-              <p className="text-red-600 text-sm mt-1">You cannot change your email ID!</p>
             </div>
             <div className="input-group">
               <label htmlFor="whatsappNumber" className="mb-3 block text-sm text-dark dark:text-white">WhatsApp Number</label>
@@ -178,18 +174,19 @@ const CheckoutPage = () => {
 
             <div className="text-center mt-8">
               <button
-                type="submit"
-                className="submit-btn-consultation"
-                disabled={loading}
+                className="text-white bg-primary hover:bg-primary-dark w-full py-3 px-8 text-lg font-medium transition-all duration-300 rounded-md"
+                onClick={initiatePayment}
               >
-                {loading ? 'Booking...' : 'Book Consultation'}
+                {loading ? 'Processing...' : 'Proceed to Pay'}
               </button>
             </div>
+
           </form>
         </div>
       </div>
     </>
   );
 };
+
 
 export default CheckoutPage;
