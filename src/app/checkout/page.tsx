@@ -54,16 +54,18 @@ const CheckoutPage = () => {
     return <p style={{ marginTop: '200px', marginBottom: '200px', textAlign: 'center' }}>Loading...</p>;
   }
 
-  async function initiatePayment() {
+  async function initiatePayment(e) {
+    e.preventDefault(); // Prevent default button or form submission behavior
+  
     const paymentDetails = {
       firstname: userName, // Dynamic value from the form state
-      email: userEmail, // Dynamic value from the form state
-      amount: "1.00", // Dynamic value based on the consultation
+      email: userEmail,    // Dynamic value from the form state
+      amount: "1.00",      // Dynamic value based on the consultation
       productinfo: `Consultation with ${expert ? `Dr. ${expert.name}` : 'expert'}`, // Dynamic info
       txnid: "txn_" + new Date().getTime(), // Unique transaction ID
       phone: whatsappNumber, // Dynamic value from the form state
     };
-
+  
     try {
       // Call the backend to get the payment payload
       const response = await fetch("/api/payu/initiate", {
@@ -73,15 +75,15 @@ const CheckoutPage = () => {
         },
         body: JSON.stringify(paymentDetails),
       });
-
+  
       const { payload } = await response.json();
-
+  
       if (payload) {
         // Redirect to PayU with the generated payload
         const payuForm = document.createElement("form");
         payuForm.method = "POST";
         payuForm.action = "https://secure.payu.in/_payment";
-
+  
         // Add payload fields to the form
         for (const key in payload) {
           const input = document.createElement("input");
@@ -90,14 +92,16 @@ const CheckoutPage = () => {
           input.value = payload[key];
           payuForm.appendChild(input);
         }
-
+  
         document.body.appendChild(payuForm);
         payuForm.submit();
       }
     } catch (error) {
       console.error("Payment initiation failed:", error);
+      alert("Failed to proceed to payment. Please try again.");
     }
   }
+  
 
   const { dateString, time } = searchParams;
   const formattedDate = dateString ? new Date(dateString) : new Date();
@@ -174,7 +178,11 @@ const CheckoutPage = () => {
             <div className="text-center mt-8">
               <button
                 className="text-white bg-primary hover:bg-primary-dark w-full py-3 px-8 text-lg font-medium transition-all duration-300 rounded-md"
-                onClick={initiatePayment}
+                onClick={(e) => {
+                  console.log('Proceeding to pay...');
+                  setLoading(true);
+                  initiatePayment(e);
+                }}
               >
                 {loading ? 'Processing...' : 'Proceed to Pay'}
               </button>

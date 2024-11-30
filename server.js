@@ -36,8 +36,9 @@ server.post('/api/payu/initiate', async (req, res) => {
       firstname,         // Customer's First Name
       email,             // Customer's Email
       phone,             // Customer's Phone (optional)
-      surl:  `${process.env.NEXT_PUBLIC_BASE_URL}/success`, // Success URL
+      surl: `${process.env.NEXT_PUBLIC_BASE_URL}/success`, // Success URL
       furl: `${process.env.NEXT_PUBLIC_BASE_URL}/failure`, // Failure URL
+      curl: `${process.env.NEXT_PUBLIC_BASE_URL}/failure`, // Cancel URL
     };
 
     // Generate the hash
@@ -59,8 +60,8 @@ server.all('*', (req, res) => {
 
 // Start the server
 app.prepare().then(() => {
-  server.listen(3000, (err) => {
+  server.listen(5000, (err) => {
     if (err) throw err;
-    console.log('> Ready on http://localhost:3000');
+    console.log('> Ready on http://localhost:5000');
   });
 });

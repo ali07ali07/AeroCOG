@@ -20,6 +20,7 @@ const SuccessPage = () => {
     const dateString = params.get("date");
     const time = params.get("time");
 
+
     if (paymentStatus === "success") {
       const appointment = {
         expertId,
@@ -29,6 +30,7 @@ const SuccessPage = () => {
         whatsappNumber,
         date: dateString,
         time,
+        
         createdAt: new Date().toISOString(),
       };
 
@@ -41,7 +43,7 @@ const SuccessPage = () => {
           router.push(`/confirmation?bookingId=${docRef.id}`);
         })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error("Error adding document: ", error.message);
           alert("There was an error with the booking. Please contact support@aerocog.tech");
         });
     } else {

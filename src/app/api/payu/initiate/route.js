@@ -49,6 +49,6 @@ export const POST = async (req) => {
     return NextResponse.json({ payload }, { status: 200 });
   } catch (error) {
     console.error("Error in /payu/initiate:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error contact support@aerocog.tech" }, { status: 500 });
   }
 };
