@@ -20,6 +20,7 @@ const SuccessPage = () => {
     const dateString = params.get("date");
     const time = params.get("time");
 
+
     if (paymentStatus === "success") {
       const appointment = {
         expertId,
@@ -29,6 +30,7 @@ const SuccessPage = () => {
         whatsappNumber,
         date: dateString,
         time,
+        
         createdAt: new Date().toISOString(),
       };
 
