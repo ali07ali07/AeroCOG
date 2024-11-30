@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../components/firebase"; 
+import { db } from "../../components/firebase";
 
 const SuccessPage = () => {
   const router = useRouter();
@@ -34,17 +34,19 @@ const SuccessPage = () => {
 
       // If payment is successful, create the appointment document
       addDoc(collection(db, "appointments"), appointment)
-        .then(() => {
+        .then((docRef) => {
+          // Successfully added the document
           alert("Appointment successfully booked!");
-          router.push(`/Confirmation?bookingId=${appointment}`);
+          // Redirect to the confirmation page with the booking ID
+          router.push(`/confirmation?bookingId=${docRef.id}`);
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
-          alert("There was an error with the booking. Please try again.");
+          alert("There was an error with the booking. Please contact support@aerocog.tech");
         });
     } else {
-      alert("Payment failed or was cancelled. Please try again.");
-      router.push("/checkout");
+      alert("Payment failed or was cancelled. contact support@aerocog.tech");
+      router.push("/experts");
     }
   }, [router]);
 
